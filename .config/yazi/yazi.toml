@@ -1,0 +1,19 @@
+[opener]
+system_default = [
+  { run = "xdg-open \"$1\"", desc = "System Default", for = "linux" }
+]
+edit = [
+    { run = 'nvim "$@"', block = true, for = "unix" },
+]
+open = [
+	{ run = 'xdg-open "$@"', desc = "Open" },
+]
+
+[open]
+rules = [
+  { mime = "application/pdf", use = [ "system_default" ] },
+  { mime = "image/*", use = [ "system_default" ] },
+  { mime = "{audio,video}/*", use = [ "system_default" ] },
+  { mime = "text/*", use = [ "edit" ] },
+  { name = "*.{txt,md,rs,py,js,ts,html,css,toml,yaml,yml,json,xml,sh,fish,vim,lua,conf,config}", use = [ "edit" ] },
+]

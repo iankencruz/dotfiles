@@ -1,0 +1,174 @@
+{
+  "layer": "top",
+  "position": "top",
+  "autohide": true,
+  "autohide-blocked": false,
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  /* === Modules Order === */
+  "modules-left": [
+    "hyprland/workspaces",
+    "wlr/taskbar",
+  ],
+  "modules-center": [
+    "clock",
+  ],
+  "modules-right": [
+    "cpu",
+    "memory",
+    "disk",
+    "temperature",
+    "pulseaudio",
+    "network",
+    "custom/power",
+  ],
+  /* === Modules Left === */
+  "hyprland/workspaces": {        
+    "active-only": false,
+    "format": "{icon}",
+    "format-icons": {
+      "urgent": "",
+      "active": "●", // Example icon for active workspace
+      "default": "○"  // Example icon for other workspaces
+    },
+    "persistent-workspaces": {
+      "*": 2
+    },
+    "active-only" : false,
+    "disable-scroll": true,
+    "all-outputs": true,
+    "show-special": true
+  },
+
+
+  
+
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "all-outputs": false,
+    "active-first": true,
+    "tooltip-format": "{name}",
+    "on-click": "activate",
+    "on-click-right": "close",
+    "ignore-list": [
+      "rofi"
+    ]
+  },
+  
+
+
+
+  /* === Modules Center === */
+  "clock": {
+    "timezone": "Australia/Sydney",
+    "format": "{:%A %d, %B %Y (%R) %Z}",
+    "tooltip-format": "{calendar}",
+    "calendar": {
+      "mode": "month"
+    },
+    "interval":1
+  },
+  
+
+
+
+  /* === Modules Right === */
+
+
+  "cpu": {
+    "format": "{usage}% ",
+    "tooltip": true,
+    "tooltip-format": "CPU : {usage}%\nCores: {cores}",
+    "on-click": "ghostty -e s-tui"
+  },
+  "memory": {
+    "format": "{}% 󰍛",
+    "tooltip": true,
+    "tooltip-format": "RAM  : {used} / {total} ({percentage}%)",
+    "on-click": "ghostty -e btop"
+  },
+  "disk": {
+    "format": "{percentage_used}% ",
+    "return-type": "json",
+    "interval": 60,
+    "exec": "~/.config/waybar/modules/storage.sh"
+  },
+  "temperature": {
+    "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
+    "format": "{temperatureC}°C {icon}",
+    "critical-threshold": 80,
+    "format-critical": "  {temperatureC}°C",
+    "tooltip": true,
+    "tooltip-format": "CPU Temp : {temperatureC}°C \nCritical > 80°C",
+    "format-icons": ["", "", ""],
+    "interval": 4,
+    "on-click": "sensors"
+  },
+  
+  
+  "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{volume}%  {icon} {format_source}",
+        "format-bluetooth-muted": "  {icon} {format_source}",
+        "format-muted": "  {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", " ", " "]
+        },
+        "on-click": "pavucontrol"
+    },
+  "network": {
+        "format": "{ifname}",
+        "format-wifi": "   {signalStrength}%",
+        "format-ethernet": " ",
+        "format-disconnected": "Not connected", //An empty format will hide the module.
+        "tooltip-format": " {ifname} via {gwaddri}",
+        "tooltip-format-wifi": "   {essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "  {ifname} ({ipaddr}/{cidr})",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50,
+        "on-click": "ghostty -e nmtui"
+    },
+
+
+  "hyprland/language": {
+    "format": "{} ",
+    "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next",
+    "format-en": "ENG"
+  },
+
+
+  "custom/notifications": {
+    "format": "󰂚",
+    "tooltip": "Left: Show 5 recent notifications | Right: Clear all notifications",
+    "on-click": "~/.config/waybar/modules/notifications.sh",
+    "on-click-right": "makoctl dismiss --all && notify-send 'Cleared' 'All notifications dismissed' -t 2000"
+  },
+
+  "custom/power": {
+      "format": "⏻",
+      "on-click": "wlogout",
+      "tooltip": false
+    },
+
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
+    }
+  },
+
+
+

@@ -1,0 +1,303 @@
+/* ===================================================================
+   WAYBAR STYLESHEET - ORGANIZED BY MODULE POSITION
+   =================================================================== */
+
+/* ===================================================================
+   GLOBAL STYLES
+   =================================================================== */
+* {
+  border: none;
+  font-family: "JetbrainsMono Nerd Font";
+  font-size: 15px;
+  min-height: 10px;
+}
+
+window#waybar {
+  background: rgba(34, 36, 54, 0.6);
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+/* ===================================================================
+   LEFT SIDE MODULES
+   =================================================================== */
+
+/* --- Workspaces Container --- */
+#workspaces {
+  margin: 2px 10px 3px 10px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* --- Workspace Buttons --- */
+#workspaces button {
+  color: #B5E8E0;
+  background: transparent;
+  padding: 4px 8px;
+  margin: 2px 3px;
+  border-radius: 6px;
+  min-width: 20px;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  font-size: 14px;
+}
+
+#workspaces button.occupied {
+  color: #A6E3A1;
+  background: rgba(166, 227, 161, 0.1);
+  padding: 4px 10px;
+  min-width: 25px;
+}
+
+#workspaces button.active {
+  color: #1e1e2e;
+  background: #89B4FA;
+  padding: 2px 12px;
+  border-radius: 12px;
+  min-width: 60px;
+  font-weight: 900;
+  box-shadow: 0 4px 15px rgba(137, 180, 250, 0.6);
+  border: 2px solid #89B4FA;
+  text-shadow: none;
+}
+
+#workspaces button:hover {
+  color: #89B4FA;
+  background: rgba(137, 180, 250, 0.1);
+  padding: 4px 12px;
+  min-width: 30px;
+}
+
+#workspaces button.active:hover {
+  background: #89B4FA;
+  box-shadow: 0 3px 12px rgba(137, 180, 250, 0.4);
+}
+
+/* --- Taskbar --- */
+#taskbar {
+  border-radius: 10px;
+  padding: 0px 5px;
+  margin: 6px 20px;
+}
+
+#taskbar button {
+  padding: 0px 5px;
+  margin: 0px 3px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+#taskbar button.active {
+  background: rgba(34, 36, 54, 0.5);
+}
+
+#taskbar button:hover {
+  background: rgba(34, 36, 54, 0.5);
+}
+
+/* ===================================================================
+   CENTER MODULE
+   =================================================================== */
+
+/* --- Clock --- */
+#clock {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 1px 25px;
+  color: #fff;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+/* ===================================================================
+   RIGHT SIDE MODULES - SHARED STYLES
+   =================================================================== */
+
+/* Base styling for all right-side system monitoring modules */
+#cpu,
+#memory,
+#disk,
+#temperature,
+#pulseaudio,
+#network,
+#custom-notifications,
+#custom-power {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 1px 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  color: #fff;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  transition: none;
+}
+
+/* ===================================================================
+   RIGHT SIDE MODULES - INDIVIDUAL STYLES
+   =================================================================== */
+
+/* --- System Monitoring Modules --- */
+#cpu {
+  /* CPU usage display */
+}
+
+#cpu:hover {
+  background: rgba(137, 180, 250, 0.2);
+  color: #89B4FA;
+}
+
+#memory {
+  /* RAM usage display */
+}
+
+#memory:hover {
+  background: rgba(137, 180, 250, 0.2);
+  color: #89B4FA;
+}
+
+#disk {
+  /* Disk usage display */
+}
+
+#disk:hover {
+  background: rgba(137, 180, 250, 0.2);
+  color: #89B4FA;
+}
+
+#temperature {
+  /* CPU temperature display */
+}
+
+#temperature:hover {
+  background: rgba(137, 180, 250, 0.2);
+  color: #89B4FA;
+}
+
+/* --- Audio Module --- */
+#pulseaudio {
+  /* Audio controls and volume display */
+}
+
+#pulseaudio:hover {
+  background: rgba(137, 180, 250, 0.2);
+  color: #89B4FA;
+}
+
+/* --- Network Module --- */
+#network {
+  /* Network connection status and info */
+}
+
+#network:hover {
+  background: rgba(137, 180, 250, 0.2);
+  color: #89B4FA;
+}
+
+/* --- Notifications Module --- */
+#custom-notifications {
+  color: #89B4FA;
+}
+
+#custom-notifications.empty {
+  color: #6c7086;
+}
+
+#custom-notifications.has-notifications {
+  color: #f9e2af;
+  background: rgba(249, 226, 175, 0.1);
+}
+
+#custom-notifications.disconnected {
+  color: #f38ba8;
+}
+
+#custom-notifications:hover {
+  background: rgba(137, 180, 250, 0.2);
+  color: #89B4FA;
+}
+
+/* --- Power Module --- */
+#custom-power {
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+#custom-power:hover {
+  background: rgba(137, 180, 250, 0.2);
+  color: #89B4FA;
+}
+
+/* ===================================================================
+   SPECIAL MODULES (UNUSED/OPTIONAL)
+   =================================================================== */
+
+/* --- Date/Time (Alternative to clock) --- */
+#datetime {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 1px 25px;
+  color: #fff;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+/* --- Idle Inhibitor --- */
+#idle_inhibitor {
+  background: #B5E8E0;
+  padding: 0px 15px;
+  border-radius: 3px;
+  color: #fff;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+/* --- Language Switcher --- */
+#language {
+  background: #A6E3A1;
+  padding: 0px 20px;
+  color: #fff;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+/* ===================================================================
+   AUDIO SLIDER COMPONENT (SPECIAL STYLING)
+   =================================================================== */
+
+#pulseaudio-slider slider {
+  min-height: 0px;
+  min-width: 0px;
+  opacity: 0;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+
+#pulseaudio-slider trough {
+  min-height: 80px;
+  min-width: 10px;
+  border-radius: 5px;
+  background-color: black;
+}
+
+#pulseaudio-slider highlight {
+  min-width: 10px;
+  border-radius: 5px;
+  background-color: green;
+}
+
+/* ===================================================================
+   ANIMATIONS AND EFFECTS
+   =================================================================== */
+
+@keyframes blink {
+  to {
+    background-color: #BF616A;
+    color: #B5E8E0;
+  }
+}
