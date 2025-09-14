@@ -2,9 +2,10 @@ source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 # overwrite greeting
 # potentially disabling fastfetch
-#function fish_greeting
-#    # smth smth
-#end
+function fish_greeting
+  sleep 0.1
+  fastfetch
+end
 
 # Yazi
 function y
@@ -17,8 +18,6 @@ function y
 end
 
 
-wal -i ~/Pictures/Wallpapers/lucy.jpeg
-# cat ~/.cache/wal/sequences &
 
 alias vim='nvim'
 alias task='go-task'

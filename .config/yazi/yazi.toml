@@ -17,3 +17,6 @@ rules = [
   { mime = "text/*", use = [ "edit" ] },
   { name = "*.{txt,md,rs,py,js,ts,html,css,toml,yaml,yml,json,xml,sh,fish,vim,lua,conf,config}", use = [ "edit" ] },
 ]
+
+[mgr]
+show_hidden = true
