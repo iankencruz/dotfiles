@@ -34,5 +34,8 @@ A tool lets you juggle multiple active Node versions in a single local environme
 - docker
 - docker compose
 - nautilus
+- go
+- airverse - (go install github.com/air-verse/air@latest)
+- go-task
 
 
