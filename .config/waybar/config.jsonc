@@ -26,7 +26,7 @@
   /* === Modules Left === */
   "hyprland/workspaces": {        
     "active-only": false,
-    "format": "{icon}",
+    "format": "{name}",
     "format-icons": {
       "urgent": "",
       "active": "●", // Example icon for active workspace

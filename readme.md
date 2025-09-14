@@ -31,11 +31,10 @@ A tool lets you juggle multiple active Node versions in a single local environme
 - zoxide
 - lazygit
 - lazydocker
-- docker
-- docker compose
+- podman (docker)
+- podman compose (docker)
 - nautilus
 - go
 - airverse - (go install github.com/air-verse/air@latest)
 - go-task
-
-
+- goose
