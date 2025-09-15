@@ -1,0 +1,17 @@
+# Basic appearance
+background-color=#2d3748
+text-color=#e2e8f0
+border-color=#4a5568
+border-size=2
+border-radius=8
+padding=15
+margin=10
+font=Inter 12
+anchor=top-right
+width=350
+# Icon configuration - this is crucial
+icons=1
+max-icon-size=48
+icon-path=/usr/share/icons/Adwaita:/usr/share/icons/hicolor:/usr/share/icons/gnome
+# Try enabling icon location fallbacks
+default-timeout=5000
