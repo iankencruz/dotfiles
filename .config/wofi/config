@@ -1,6 +1,7 @@
 allow_images=true
+insensitive=true
 hide_scroll=true
-no_actions=false
+no_actions=true
 term=ghostty
 mode=drun
 --show

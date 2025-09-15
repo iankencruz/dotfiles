@@ -20,7 +20,7 @@ palette = 14=#ffee88
 palette = 15=#ffffff
 # Terminal background and foreground
 background = #000000
-foreground = #e0e0e0
+foreground = #ffffff
 # Cursor styling
 cursor-color = #ff4422
 cursor-text = #000000

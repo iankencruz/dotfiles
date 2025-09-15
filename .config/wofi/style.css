@@ -1,34 +1,44 @@
 * {
   font-family: "Hack", monospace;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 window {
-  background-color: #007d6f;
-  /* cachydgreen */
-  border-radius: 1rem;
+  background-color: #000000;
+  /* Pure black background to match terminal */
+  border-radius: 0.2rem;
 }
 
 #input {
   margin: 5px;
-  border-radius: 0.5rem;
   border: none;
-  background-color: #111826;
-  /* cachydgreen */
-  color: #ffffffff;
-  /* cachywhite */
+  background-color: #2a2a2a;
+  /* Dark gray from palette 0 */
+  color: #e0e0e0;
+  padding-left: 17px;
+  /* Foreground color */
+}
+
+#input:focus {
+  border: 2px solid #ff4422;
+  /* Red-orange border when focused */
+  background-color: #444444;
+  /* Slightly lighter background when focused */
+  outline: none;
 }
 
 #inner-box {
-  background-color: #111826;
-  /* cachydblue */
+  background-color: #2a2a2a;
+  /* Dark gray from palette 0 */
 }
 
 #outer-box {
   margin: 2px;
   padding: 10px;
-  background-color: #111826;
-  /* cachydblue */
+  background-color: #2a2a2a;
+  /* Dark gray from palette 0 */
 }
 
 #scroll {
@@ -37,20 +47,22 @@ window {
 
 #text {
   padding: 4px;
-  color: #ffffffff;
-  /* cachywhite */
+  color: #e0e0e0;
+  /* Foreground color */
 }
 
-#entry:nth-child(even) {
-  background-color: #182545;
-  /* cachymblue */
+#entry {
+  padding: 5px 5px 5px 10px;
 }
+
 
 #entry:selected {
-  background-color: #00aa84;
-  /* cachymgreen */
+  background-color: #ff8866;
+  /* Red-orange from your dominant color */
 }
 
 #text:selected {
   background: transparent;
+  color: #000000;
+  /* Black text on red-orange background for contrast */
 }
