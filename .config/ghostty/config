@@ -51,6 +51,6 @@
 
 
 # System Config
-theme = catppuccin-mocha
+theme = TNB
 gtk-custom-css = "~/.config/ghostty/style.css"
 confirm-close-surface = false

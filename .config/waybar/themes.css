@@ -1,0 +1,18 @@
+/* ===================================================================
+   WAYBAR THEME VARIABLES
+   =================================================================== */
+
+:root {
+  /* Main Colors */
+  --bg-color: rgba(20, 20, 20, 0.8);
+  --dark-bg: rgba(0, 0, 0, 0.5);
+  --text-color: #ffffff;
+  --placeholder-color: #777777;
+
+  /* Accent Colors */
+  --red-accent-light: #FF5733;
+  --red-accent-dark: #8B0000;
+  --red-accent-hover: rgba(255, 87, 51, 0.2);
+  --red-accent-occupied: rgba(139, 0, 0, 0.1);
+  --red-accent-has-notifications: #FF0000;
+}

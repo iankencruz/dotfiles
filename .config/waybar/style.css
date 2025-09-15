@@ -13,7 +13,7 @@
 }
 
 window#waybar {
-  background: rgba(34, 36, 54, 0.6);
+  background: rgba(20, 20, 20, 0.8);
 }
 
 window#waybar.hidden {
@@ -36,45 +36,44 @@ window#waybar.hidden {
 
 /* --- Workspace Buttons --- */
 #workspaces button {
-  color: #B5E8E0;
+  color: #777777;
   background: transparent;
   padding: 4px 8px;
   margin: 2px 3px;
   border-radius: 6px;
-  min-width: 20px;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   font-size: 14px;
 }
 
 #workspaces button.occupied {
-  color: #A6E3A1;
-  background: rgba(166, 227, 161, 0.1);
+  color: #8B0000;
+  background: rgba(139, 0, 0, 0.1);
   padding: 4px 10px;
   min-width: 25px;
 }
 
 #workspaces button.active {
-  color: #1e1e2e;
-  background: #89B4FA;
-  padding: 2px 12px;
-  border-radius: 12px;
-  min-width: 60px;
+  color: #000000;
+  background: #FF5733;
+  padding: 2px 10px;
+  border-radius: 8px;
+  min-width: 30px;
   font-weight: 900;
-  box-shadow: 0 4px 15px rgba(137, 180, 250, 0.6);
-  border: 2px solid #89B4FA;
+  box-shadow: 0 4px 15px rgba(255, 87, 51, 0.6);
+  border: 2px solid #FF5733;
   text-shadow: none;
 }
 
 #workspaces button:hover {
-  color: #89B4FA;
-  background: rgba(137, 180, 250, 0.1);
+  color: #FF5733;
+  background: rgba(255, 87, 51, 0.2);
   padding: 4px 12px;
   min-width: 30px;
 }
 
 #workspaces button.active:hover {
-  background: #89B4FA;
-  box-shadow: 0 3px 12px rgba(137, 180, 250, 0.4);
+  background: #FF5733;
+  box-shadow: 0 3px 12px rgba(255, 87, 51, 0.4);
 }
 
 /* --- Taskbar --- */
@@ -108,7 +107,7 @@ window#waybar.hidden {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 1px 25px;
-  color: #fff;
+  color: #ffffff;
   margin-top: 6px;
   margin-bottom: 6px;
 }
@@ -131,7 +130,7 @@ window#waybar.hidden {
   padding: 1px 15px;
   margin-left: 5px;
   margin-right: 5px;
-  color: #fff;
+  color: #ffffff;
   margin-top: 6px;
   margin-bottom: 6px;
   transition: none;
@@ -147,8 +146,8 @@ window#waybar.hidden {
 }
 
 #cpu:hover {
-  background: rgba(137, 180, 250, 0.2);
-  color: #89B4FA;
+  background: rgba(255, 87, 51, 0.2);
+  color: #FF5733;
 }
 
 #memory {
@@ -156,8 +155,8 @@ window#waybar.hidden {
 }
 
 #memory:hover {
-  background: rgba(137, 180, 250, 0.2);
-  color: #89B4FA;
+  background: rgba(255, 87, 51, 0.2);
+  color: #FF5733;
 }
 
 #disk {
@@ -165,8 +164,8 @@ window#waybar.hidden {
 }
 
 #disk:hover {
-  background: rgba(137, 180, 250, 0.2);
-  color: #89B4FA;
+  background: rgba(255, 87, 51, 0.2);
+  color: #FF5733;
 }
 
 #temperature {
@@ -174,8 +173,8 @@ window#waybar.hidden {
 }
 
 #temperature:hover {
-  background: rgba(137, 180, 250, 0.2);
-  color: #89B4FA;
+  background: rgba(255, 87, 51, 0.2);
+  color: #FF5733;
 }
 
 /* --- Audio Module --- */
@@ -184,8 +183,8 @@ window#waybar.hidden {
 }
 
 #pulseaudio:hover {
-  background: rgba(137, 180, 250, 0.2);
-  color: #89B4FA;
+  background: rgba(255, 87, 51, 0.2);
+  color: #FF5733;
 }
 
 /* --- Network Module --- */
@@ -194,13 +193,13 @@ window#waybar.hidden {
 }
 
 #network:hover {
-  background: rgba(137, 180, 250, 0.2);
-  color: #89B4FA;
+  background: rgba(255, 87, 51, 0.2);
+  color: #FF5733;
 }
 
 /* --- Notifications Module --- */
 #custom-notifications {
-  color: #89B4FA;
+  color: #FF5733;
 }
 
 #custom-notifications.empty {
@@ -208,8 +207,8 @@ window#waybar.hidden {
 }
 
 #custom-notifications.has-notifications {
-  color: #f9e2af;
-  background: rgba(249, 226, 175, 0.1);
+  color: #FF0000;
+  background: rgba(255, 0, 0, 0.1);
 }
 
 #custom-notifications.disconnected {
@@ -217,8 +216,8 @@ window#waybar.hidden {
 }
 
 #custom-notifications:hover {
-  background: rgba(137, 180, 250, 0.2);
-  color: #89B4FA;
+  background: rgba(255, 87, 51, 0.2);
+  color: #FF5733;
 }
 
 /* --- Power Module --- */
@@ -228,8 +227,8 @@ window#waybar.hidden {
 }
 
 #custom-power:hover {
-  background: rgba(137, 180, 250, 0.2);
-  color: #89B4FA;
+  background: rgba(255, 87, 51, 0.2);
+  color: #FF5733;
 }
 
 /* ===================================================================
@@ -241,26 +240,26 @@ window#waybar.hidden {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 1px 25px;
-  color: #fff;
+  color: #ffffff;
   margin-top: 6px;
   margin-bottom: 6px;
 }
 
 /* --- Idle Inhibitor --- */
 #idle_inhibitor {
-  background: #B5E8E0;
+  background: #FF5733;
   padding: 0px 15px;
   border-radius: 3px;
-  color: #fff;
+  color: #ffffff;
   margin-top: 6px;
   margin-bottom: 6px;
 }
 
 /* --- Language Switcher --- */
 #language {
-  background: #A6E3A1;
+  background: #8B0000;
   padding: 0px 20px;
-  color: #fff;
+  color: #ffffff;
   margin-top: 6px;
   margin-bottom: 6px;
 }
@@ -288,7 +287,7 @@ window#waybar.hidden {
 #pulseaudio-slider highlight {
   min-width: 10px;
   border-radius: 5px;
-  background-color: green;
+  background-color: #FF5733;
 }
 
 /* ===================================================================
@@ -297,7 +296,7 @@ window#waybar.hidden {
 
 @keyframes blink {
   to {
-    background-color: #BF616A;
-    color: #B5E8E0;
+    background-color: #FF5733;
+    color: #777777;
   }
 }
