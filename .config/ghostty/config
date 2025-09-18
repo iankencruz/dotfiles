@@ -54,3 +54,8 @@
 theme = TNB
 gtk-custom-css = "~/.config/ghostty/style.css"
 confirm-close-surface = false
+
+
+
+keybind = ctrl+shift+up=scroll_page_up
+keybind = ctrl+shift+down=scroll_page_down

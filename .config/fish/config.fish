@@ -56,3 +56,9 @@ set -gx VISUAL /usr/bin/nvim
 set -x XDG_CURRENT_DESKTOP Hyprland
 set -x XDG_SESSION_DESKTOP Hyprland
 set -x XDG_SESSION_TYPE wayland
+
+
+
+
+# Disable automatic startup of the ssh-agent
+# set -g fish_ssh_agent_enabled false
