@@ -3,5 +3,7 @@ insensitive=true
 hide_scroll=true
 no_actions=true
 term=ghostty
+width=1500px
 mode=drun
+columns=3
 --show
