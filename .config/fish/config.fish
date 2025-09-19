@@ -35,24 +35,21 @@ set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
 
+# Go 
 set -x PATH $PATH /home/ianc/go/bin
 
-
-
+# Rust
 set -gx PATH $HOME/.cargo/bin $PATH
 
-
+# File Managers
 set -gx FILE_MANAGER nautilus
 set -gx TERMINAL_FILE_MANAGER yazi
 
-
+# Set Nvim as default
 set -gx EDITOR nvim
 set -gx VISUAL /usr/bin/nvim
 
-
-
-
-
+# Hyprland as XDG default
 set -x XDG_CURRENT_DESKTOP Hyprland
 set -x XDG_SESSION_DESKTOP Hyprland
 set -x XDG_SESSION_TYPE wayland
@@ -62,3 +59,6 @@ set -x XDG_SESSION_TYPE wayland
 
 # Disable automatic startup of the ssh-agent
 # set -g fish_ssh_agent_enabled false
+
+# Init Oh-my-posh
+oh-my-posh init fish --config ~/.config/ohmyposh/BurningMelo.toml | source
