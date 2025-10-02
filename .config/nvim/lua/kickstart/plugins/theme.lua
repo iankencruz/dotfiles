@@ -54,6 +54,7 @@ return {
             pink = '#e8a6a6', -- warm pastel pink (numbers)
             flamingo = '#cccccc', -- palette 7 (light gray)
             rosewater = '#ffffff', -- palette 15 (white)
+            info = '#93c5fd',
 
             -- Surface colors for UI elements
             surface0 = '#333333', -- slightly lighter than base

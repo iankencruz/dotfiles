@@ -15,8 +15,10 @@ rules = [
   { mime = "image/*", use = [ "system_default" ] },
   { mime = "{audio,video}/*", use = [ "system_default" ] },
   { mime = "text/*", use = [ "edit" ] },
-  { name = "*.{txt,md,rs,py,js,ts,html,css,toml,yaml,yml,json,xml,sh,fish,vim,lua,conf,config}", use = [ "edit" ] },
+  { name = "*.{txt,md,rs,py,js,ts,html,css,toml,yaml,yml,json,xml,qml,sh,fish,vim,lua,conf,config}", use = [ "edit" ] },
 ]
 
 [mgr]
 show_hidden = false
+
+
