@@ -11,7 +11,7 @@ return {
       char = '│',
       show_start = true,
       show_end = true,
-      highlight = 'ashen',
+      highlight = 'catppuccin',
     },
   },
   config = function(_, opts)

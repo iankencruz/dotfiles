@@ -4,6 +4,7 @@ hide_scroll=true
 no_actions=true
 term=ghostty
 width=1500px
+PrefersNonDefaultGPU=false
 mode=drun
 columns=3
 --show

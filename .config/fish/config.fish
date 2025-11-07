@@ -130,23 +130,26 @@ end
 # In Fish, aliases are created as simple wrapper functions for better handling.
 
 # Editor Aliases
-alias vim='nvim'
-alias vi='nvim'
+alias vim='nvim'          # Use neovim when you type 'vim'
+alias vi='nvim'           # Use neovim when you type 'vi'
 
 # Directory Listing Aliases (using eza)
 alias ls='eza -alh --icons=always'
-alias tree='eza -al --tree --icons=always'
-alias btree='eza -al --tree --icons=always'
+alias la='eza -a --icons=always'
 
 # System Navigation/Management
-# Alias 'cd' is handled by zoxide init, so we skip it.
-abbr --add up 'z ..' # Use z for smart navigation
-abbr --add path 'echo $PATH'
-# The 'reload' alias/function:
-function reload
-    source ~/.config/fish/config.fish
-end
+alias cd='z'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias up='cd ..'
+alias path='echo $PATH'
+alias reload='exec fish' # Quick way to apply changes to this file
 
-# Utility Aliases
-abbr --add cat bat
-abbr --add lg lazygit
+# use bat instead of cat for better file output formatting
+alias cat='bat'
+
+# LazyGit Git manager
+alias lg='lazygit'
+
+
+

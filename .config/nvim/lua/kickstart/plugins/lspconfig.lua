@@ -256,6 +256,11 @@ return {
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         ts_ls = {},
 
+        -- Add Astro LSP
+        astro = {
+          filetypes = { 'astro' },
+        },
+
         -- Add Svelte Language Server configuration
         svelte = {
           filetypes = { 'svelte' }, -- Svelte 5 uses .svelte files
@@ -273,6 +278,24 @@ return {
                 },
               },
             },
+          },
+        },
+
+        biome = {
+          filetypes = {
+            'astro',
+            'css',
+            'graphql',
+            'html',
+            'javascript',
+            'javascriptreact',
+            'json',
+            'jsonc',
+            'svelte',
+            'typescript',
+            'typescript.tsx',
+            'typescriptreact',
+            'vue',
           },
         },
 
@@ -300,7 +323,7 @@ return {
           -- to fully override the default_config, change the below
           -- filetypes = {}
           --         filetypes = { "templ", "astro", "javascript", "typescript", "react" },
-          filetypes = { 'templ', 'astro', 'javascript', 'tmpl', 'html', 'typescript', 'react', 'svelte' },
+          filetypes = { 'templ', 'astro', 'javascript', 'tmpl', 'html', 'typescript', 'react', 'svelte', 'jsx', 'tsx' },
           init_options = { userLanguages = { templ = 'html' } },
         },
 
@@ -345,7 +368,7 @@ return {
           'cssls',
           'tailwindcss',
           'svelte',
-          'lua_ls',
+          'biome',
         }, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
         handlers = {
