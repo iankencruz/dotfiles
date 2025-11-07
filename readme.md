@@ -38,3 +38,15 @@ A tool lets you juggle multiple active Node versions in a single local environme
 - airverse - (go install github.com/air-verse/air@latest)
 - go-task
 - goose
+- cargo
+- bruno
+- discord
+- discord canary
+- tableplus
+- neovim
+- steam
+
+
+### Honourable Mentions
+- quickshell
+- ohmyposh
