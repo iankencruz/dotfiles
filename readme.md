@@ -3,7 +3,6 @@
 
 
 
-
 # [Fish Shell Initialisation]
 Install Fisher as a plugin manager to help make life easier
 
@@ -20,6 +19,13 @@ Utility functions to start your ssh agent when using fish shell. You will only n
 
 ### nvm.fish - [https://github.com/jorgebucaran/nvm.fish]
 A tool lets you juggle multiple active Node versions in a single local environment. Install and switch between runtimes like a boss, without messing up your home directory or breaking system-wide scripts.
+
+
+### Install ohmyposh 
+
+```
+curl -s https://ohmyposh.dev/install.sh | bash -s
+```
 
 
 ```fisher install jorgebucaren/nvm.fish```
