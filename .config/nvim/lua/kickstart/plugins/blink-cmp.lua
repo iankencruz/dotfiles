@@ -67,7 +67,7 @@ return {
         accept = { auto_brackets = { enabled = true } },
         menu = {
           -- Don't automatically show the completion menu
-          auto_show = true,
+          auto_show = false,
 
           -- nvim-cmp style menu
           draw = {

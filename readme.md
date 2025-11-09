@@ -51,6 +51,7 @@ curl -s https://ohmyposh.dev/install.sh | bash -s
 - tableplus
 - neovim
 - steam
+- bun
 
 
 ### Honourable Mentions

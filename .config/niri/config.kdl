@@ -17,8 +17,10 @@ input {
         natural-scroll // Enable natural (macOS-style) scrolling
     }
 
-    focus-follows-mouse // Automatically focus windows under the mouse pointer
+    
+    focus-follows-mouse max-scroll-amount="15%" 
     workspace-auto-back-and-forth // Enable workspace back & forth switching
+  
 }
 
 // ────────────── Output Configuration ──────────────
@@ -26,8 +28,14 @@ input {
 // You will have to remove "/-" and edit it before it takes effect.
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 
-/- output "DP-1" {
-    mode "2560x1440@359.979" // Set resolution and refresh rate
+output "DP-1" {
+    mode "3840x2160@60" // Set resolution and refresh rate
+    scale 1.3 // No scaling (use 2 for HiDPI)
+}
+
+
+output "DP-3" {
+    mode "2560x1440@179.960" // Set resolution and refresh rate
     scale 1 // No scaling (use 2 for HiDPI)
 }
 
@@ -35,10 +43,10 @@ input {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
 
 binds {
-    MOD+SHIFT+ESCAPE                     { show-hotkey-overlay; }
+    MOD+CONTROL+SLASH                     { show-hotkey-overlay; }
 
     // ─── Applications ───
-    MOD+RETURN                          hotkey-overlay-title="Open Terminal: ghostty" { spawn-sh "ghostty"; }
+    MOD+RETURN                          hotkey-overlay-title="Open Terminal: alacritty" { spawn-sh "alacritty"; }
     MOD+SPACE                           hotkey-overlay-title="Open App Launcher: wofi" { spawn-sh "wofi"; }
     MOD+B                               hotkey-overlay-title="Open Browser: firefox" { spawn-sh "firefox"; }
     MOD+ALT+L                           hotkey-overlay-title="Lock Screen: swaylock" { spawn-sh "swaylock"; }
@@ -143,7 +151,7 @@ binds {
     MOD+SHIFT+EQUAL                     { set-window-height "+10%"; }
 
     // ─── Modes ───
-    MOD+T                               { toggle-window-floating; }
+    MOD+V                               { toggle-window-floating; }
     MOD+F                               { fullscreen-window; }
     MOD+W                               { toggle-column-tabbed-display; }
 
@@ -178,7 +186,7 @@ binds {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 
     layout {
-        gaps 16 // Gap between windows
+        gaps 4 // Gap between windows
         center-focused-column "never" // Don’t auto-center focused column
         always-center-single-column
 
@@ -248,7 +256,7 @@ binds {
     }
 
     window-rule {
-        geometry-corner-radius 20 // Set every window radius to 20
+        geometry-corner-radius 5 // Set every window radius to 20
         clip-to-geometry true
     }
 
