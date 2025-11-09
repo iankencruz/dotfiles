@@ -97,4 +97,23 @@ for pkg in "${paru_packages[@]}"; do
 done
 
 ---
+
+echo "🔗 Creating 'task' symlink for 'go-task'..."
+# This ensures 'go-task' can be executed simply as 'task'.
+GO_TASK_PATH="/usr/bin/go-task"
+TASK_LINK="/usr/bin/task"
+
+if [ -f "$GO_TASK_PATH" ]; then
+    echo "Executing: sudo ln -sf $GO_TASK_PATH $TASK_LINK"
+    # -s: creates a symbolic link; -f: forces overwrite if 'task' already exists.
+    sudo ln -sf "$GO_TASK_PATH" "$TASK_LINK"
+    echo "Symlink created successfully. You can now use the 'task' command."
+else
+    echo "**Warning:** '$GO_TASK_PATH' not found. Skipping 'task' symlink creation."
+fi
+
+
+
+
+---
 echo "Batch installation complete. 🎉"
