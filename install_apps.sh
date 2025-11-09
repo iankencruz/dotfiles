@@ -29,7 +29,6 @@ paru_packages=(
 
     # Go and Docker tools
     "go-task" # Task runner (often go-task-bin or similar in AUR)
-    "goose-cli" # Database migration tool (often goose-cli-bin or similar in AUR)
     
     # Desktop applications
     "bruno" # API client
@@ -40,7 +39,7 @@ paru_packages=(
 
 # Go-specific installation for airverse
 AIRVERSE_INSTALL="go install github.com/air-verse/air@latest"
-
+GOOSE_INSTALL="go install github.com/pressly/goose/v3/cmd/goose@latest"
 BUN_INSTALL="curl -fsSL https://bun.com/install | bash"
 
 echo "Updating system before installing new packages..."
@@ -80,6 +79,19 @@ else
     echo "**Warning:** 'go' command not found. Skipping 'airverse' installation."
 fi
 
+
+
+---
+
+echo "Installing **Goose** using 'go install'..."
+# Ensure Go environment is set up and working for 'go install'
+if command -v go &> /dev/null; then
+    echo "Executing: $AIRVERSE_INSTALL"
+    $GOOSE_INSTALL
+    # Note: Ensure $HOME/go/bin is in your \$PATH to run airverse.
+else
+    echo "**Warning:** 'go' command not found. Skipping 'airverse' installation."
+fi
 
 
 ---

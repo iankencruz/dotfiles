@@ -8,13 +8,14 @@
   "gtk-layer-shell": true,
   /* === Modules Order === */
   "modules-left": [
-    "hyprland/workspaces",
+    "niri/workspaces",
     "wlr/taskbar",
   ],
   "modules-center": [
     "clock",
   ],
   "modules-right": [
+    // "tray",
     "cpu",
     "memory",
     "disk",
@@ -80,13 +81,13 @@
     "format": "{usage}% ",
     "tooltip": true,
     "tooltip-format": "CPU : {usage}%\nCores: {cores}",
-    "on-click": "ghostty -e s-tui"
+    "on-click": "alacritty -e s-tui"
   },
   "memory": {
     "format": "{}% 󰍛",
     "tooltip": true,
     "tooltip-format": "RAM  : {used} / {total} ({percentage}%)",
-    "on-click": "ghostty -e btop"
+    "on-click": "alacritty -e btop"
   },
   "disk": {
     "format": "{percentage_used}% ",
@@ -136,7 +137,7 @@
         "tooltip-format-ethernet": "  {ifname} ({ipaddr}/{cidr})",
         "tooltip-format-disconnected": "Disconnected",
         "max-length": 50,
-        "on-click": "ghostty -e nmtui"
+        "on-click": "alacritty -e nmtui"
     },
 
 

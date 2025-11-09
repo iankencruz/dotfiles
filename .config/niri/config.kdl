@@ -4,6 +4,7 @@
 // ────────────── Input Configuration ──────────────
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 
+
 input {
     keyboard {
         xkb {
@@ -57,8 +58,8 @@ binds {
     // ─── Audio Controls ───
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
-    XF86AudioRaiseVolume                allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
-    XF86AudioLowerVolume                allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioRaiseVolume                allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+"; }
+    XF86AudioLowerVolume                allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
     XF86AudioMute                       allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute                    allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
     XF86AudioNext                       allow-when-locked=true { spawn-sh "playerctl next"; }
@@ -79,29 +80,31 @@ binds {
     MOD+UP                              cooldown-ms=50 { focus-workspace-up; }
     MOD+DOWN                            cooldown-ms=50  { focus-workspace-down; }
 
-    MOD+CTRL+LEFT                       { move-column-left; }
-    MOD+CTRL+H                          { move-column-left; }
-    MOD+CTRL+RIGHT                      { move-column-right; }
-    MOD+CTRL+L                          { move-column-right; }
-    MOD+CTRL+UP                         { move-window-up; }
-    MOD+CTRL+K                          { move-window-up; }
-    MOD+CTRL+DOWN                       { move-window-down; }
-    MOD+CTRL+J                          { move-window-down; }
+    MOD+SHIFT+LEFT                       { move-column-left; }
+    MOD+SHIFT+H                          { move-column-left; }
+    MOD+SHIFT+RIGHT                      { move-column-right; }
+    MOD+SHIFT+L                          { move-column-right; }
+    MOD+SHIFT+UP                         { move-window-up; }
+    MOD+SHIFT+K                          { move-window-up; }
+    MOD+SHIFT+DOWN                       { move-window-down; }
+    MOD+SHIFT+J                          { move-window-down; }
 
     MOD+HOME                            { focus-column-first; }
     MOD+END                             { focus-column-last; }
     MOD+CTRL+HOME                       { move-column-to-first; }
     MOD+CTRL+END                        { move-column-to-last; }
 
-    MOD+SHIFT+LEFT                      { focus-monitor-left; }
-    MOD+SHIFT+RIGHT                     { focus-monitor-right; }
-    MOD+SHIFT+UP                        { focus-monitor-up; }
-    MOD+SHIFT+DOWN                      { focus-monitor-down; }
+    MOD+COMMA                      { focus-monitor-left; }
+    MOD+PERIOD                     { focus-monitor-right; }
 
-    MOD+SHIFT+CTRL+LEFT                 { move-column-to-monitor-left; }
-    MOD+SHIFT+CTRL+RIGHT                { move-column-to-monitor-right; }
-    MOD+SHIFT+CTRL+UP                   { move-column-to-monitor-up; }
-    MOD+SHIFT+CTRL+DOWN                 { move-column-to-monitor-down; }
+    MOD+SHIFT+COMMA                 { move-column-to-monitor-left; }
+    MOD+SHIFT+PERIOD                { move-column-to-monitor-right; }
+
+    // Monitor movement vertical (UP, DOWN)
+    // MOD+CTRL+UP                        { focus-monitor-up; }
+    // MOD+CTRL+DOWN                      { focus-monitor-down; }
+    // MOD+SHIFT+CTRL+UP                   { move-column-to-monitor-up; }
+    // MOD+SHIFT+CTRL+DOWN                 { move-column-to-monitor-down; }
 
     // ─── Workspace Switching ───
     MOD+WHEELSCROLLDOWN                 cooldown-ms=150 { focus-workspace-down; }
@@ -129,20 +132,20 @@ binds {
     MOD+8                               { focus-workspace 8; }
     MOD+9                               { focus-workspace 9; }
 
-    MOD+CTRL+1                          { move-column-to-workspace 1; }
-    MOD+CTRL+2                          { move-column-to-workspace 2; }
-    MOD+CTRL+3                          { move-column-to-workspace 3; }
-    MOD+CTRL+4                          { move-column-to-workspace 4; }
-    MOD+CTRL+5                          { move-column-to-workspace 5; }
-    MOD+CTRL+6                          { move-column-to-workspace 6; }
-    MOD+CTRL+7                          { move-column-to-workspace 7; }
-    MOD+CTRL+8                          { move-column-to-workspace 8; }
-    MOD+CTRL+9                          { move-column-to-workspace 9; }
+    MOD+SHIFT+1                          { move-column-to-workspace 1; }
+    MOD+SHIFT+2                          { move-column-to-workspace 2; }
+    MOD+SHIFT+3                          { move-column-to-workspace 3; }
+    MOD+SHIFT+4                          { move-column-to-workspace 4; }
+    MOD+SHIFT+5                          { move-column-to-workspace 5; }
+    MOD+SHIFT+6                          { move-column-to-workspace 6; }
+    MOD+SHIFT+7                          { move-column-to-workspace 7; }
+    MOD+SHIFT+8                          { move-column-to-workspace 8; }
+    MOD+SHIFT+9                          { move-column-to-workspace 9; }
 
-    MOD+TAB                             { focus-workspace-previous; }
+    MOD+TAB                              { focus-workspace-previous; }
 
     // ─── Layout Controls ───
-    MOD+CTRL+F                          { expand-column-to-available-width; }
+    MOD+SHIFT+F                         { expand-column-to-available-width; }
     MOD+C                               { center-column; }
     MOD+CTRL+C                          { center-visible-columns; }
     MOD+MINUS                           { set-column-width "-10%"; }
@@ -247,6 +250,11 @@ binds {
         }
     }
 
+
+
+
+
+
 // ────────────── Window Rules ──────────────
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
 
@@ -255,8 +263,20 @@ binds {
         open-floating true // Always float Firefox PiP windows
     }
 
+   
+
     window-rule {
-        geometry-corner-radius 5 // Set every window radius to 20
+        // match app-id="Alacritty"
+        match app-id="firefox"
+        open-maximized true
+        
+        open-focused true
+
+    }
+
+
+    window-rule {
+        geometry-corner-radius 5 // Set every window radius to 5
         clip-to-geometry true
     }
 

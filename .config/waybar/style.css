@@ -300,3 +300,23 @@ window#waybar.hidden {
     color: #777777;
   }
 }
+
+
+#custom-exit {
+  background-color: #00ac89;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f1117;
+  padding: 0px 6px;
+  margin: 2px 2px 2px 0;
+}
+
+
+#tray {
+  background-color: #1e222a;
+  font-size: 14px;
+  font-weight: 800;
+  color: #c0c0c0;
+  border-radius: 0px;
+  padding: 8px 10px;
+}
