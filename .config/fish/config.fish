@@ -71,6 +71,10 @@ if type -q fzf
     
     # Optional: Set custom fzf options here (e.g., theme)
     # set -gx FZF_DEFAULT_OPTS '--color=...'
+
+
+
+
 end
 
 # --- Yazi File Manager Function ---

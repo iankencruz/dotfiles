@@ -19,7 +19,7 @@ input {
     }
 
     
-    focus-follows-mouse max-scroll-amount="15%" 
+    // focus-follows-mouse max-scroll-amount="0%" 
     workspace-auto-back-and-forth // Enable workspace back & forth switching
   
 }
@@ -47,9 +47,9 @@ binds {
     MOD+CONTROL+SLASH                     { show-hotkey-overlay; }
 
     // ─── Applications ───
-    MOD+RETURN                          hotkey-overlay-title="Open Terminal: alacritty" { spawn-sh "alacritty"; }
+    MOD+RETURN                          hotkey-overlay-title="Open Terminal: ghostty" { spawn-sh "ghostty"; }
     MOD+SPACE                           hotkey-overlay-title="Open App Launcher: wofi" { spawn-sh "wofi"; }
-    MOD+B                               hotkey-overlay-title="Open Browser: firefox" { spawn-sh "firefox"; }
+    MOD+B                               hotkey-overlay-title="Open Browser: zen" { spawn-sh "zen-browser"; }
     MOD+ALT+L                           hotkey-overlay-title="Lock Screen: swaylock" { spawn-sh "swaylock"; }
     
     // Please choose your own file manager
@@ -76,6 +76,12 @@ binds {
     MOD+L                               { focus-column-right; }
     MOD+K                               { focus-window-up; }
     MOD+J                               { focus-window-down; }
+
+    // ───  Consume into tab display ───
+    MOD+SHIFT+CTRL+LEFT                    { consume-or-expel-window-left; }
+    MOD+SHIFT+CTRL+RIGHT                    { consume-or-expel-window-right; }
+    MOD+SHIFT+CTRL+H                    { consume-or-expel-window-left; }
+    MOD+SHIFT+CTRL+L                    { consume-or-expel-window-right; }
 
     MOD+UP                              cooldown-ms=50 { focus-workspace-up; }
     MOD+DOWN                            cooldown-ms=50  { focus-workspace-down; }
@@ -145,7 +151,8 @@ binds {
     MOD+TAB                              { focus-workspace-previous; }
 
     // ─── Layout Controls ───
-    MOD+SHIFT+F                         { expand-column-to-available-width; }
+    MOD+F                               { maximize-column;}
+    MOD+M                               { expand-column-to-available-width; }
     MOD+C                               { center-column; }
     MOD+CTRL+C                          { center-visible-columns; }
     MOD+MINUS                           { set-column-width "-10%"; }
@@ -155,7 +162,7 @@ binds {
 
     // ─── Modes ───
     MOD+V                               { toggle-window-floating; }
-    MOD+F                               { fullscreen-window; }
+    MOD+SHIFT+F                               { fullscreen-window; }
     MOD+W                               { toggle-column-tabbed-display; }
 
     // ─── Screenshots ───
@@ -192,6 +199,7 @@ binds {
         gaps 4 // Gap between windows
         center-focused-column "never" // Don’t auto-center focused column
         always-center-single-column
+
 
         preset-column-widths {
             proportion 0.33333
@@ -262,6 +270,14 @@ binds {
         match app-id=r#"firefox$"# title="^Picture-in-Picture$"
         open-floating true // Always float Firefox PiP windows
     }
+
+    window-rule{
+        match app-id=r#"pavucontrol$"# title="Volume Control"
+        open-floating true // Always float Firefox PiP windows
+        default-column-width { proportion 0.35; }
+        default-window-height { proportion 0.45; }
+      }
+
 
    
 

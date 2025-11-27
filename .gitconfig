@@ -1,0 +1,8 @@
+[user]
+	email = iankencruz@gmail.com
+	name = ianc
+
+[includeIf "gitdir/i:~/Workspace/ynot/"]
+    path = ~/.gitconfig-ynot
+
+

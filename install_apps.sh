@@ -40,6 +40,7 @@ paru_packages=(
 # Go-specific installation for airverse
 AIRVERSE_INSTALL="go install github.com/air-verse/air@latest"
 GOOSE_INSTALL="go install github.com/pressly/goose/v3/cmd/goose@latest"
+SQLC_INSTALL="go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest"
 BUN_INSTALL="curl -fsSL https://bun.com/install | bash"
 
 echo "Updating system before installing new packages..."
@@ -86,13 +87,24 @@ fi
 echo "Installing **Goose** using 'go install'..."
 # Ensure Go environment is set up and working for 'go install'
 if command -v go &> /dev/null; then
-    echo "Executing: $AIRVERSE_INSTALL"
+    echo "Executing: $GOOSE_INSTALL"
     $GOOSE_INSTALL
     # Note: Ensure $HOME/go/bin is in your \$PATH to run airverse.
 else
-    echo "**Warning:** 'go' command not found. Skipping 'airverse' installation."
+    echo "**Warning:** 'go' command not found. Skipping 'goose' installation."
 fi
 
+---
+
+echo "Installing **sqlc** using 'go install'..."
+# Ensure Go environment is set up and working for 'go install'
+if command -v go &> /dev/null; then
+    echo "Executing: $SQLC_INSTALL"
+    $SQLC_INSTALL
+    # Note: Ensure $HOME/go/bin is in your \$PATH to run airverse.
+else
+    echo "**Warning:** 'go' command not found. Skipping 'sqlc' installation."
+fi
 
 ---
 
