@@ -36,6 +36,15 @@ return {
 				["-"] = "actions.parent",
 				["q"] = "actions.close",
 				["<Esc>"] = "actions.close",
+				["<C-s>"] = { "actions.select", opts = { horizontal = true } },
+				["<C-v>"] = { "actions.select", opts = { vertical = true } },
+				["<C-r>"] = "actions.refresh",
+
+				["<C-x>"] = { "actions.close", mode = "n" },
+				["<C-c>"] = false,
+
+				["<C-l>"] = false,
+				["<C-h>"] = false,
 			},
 		})
 	end,

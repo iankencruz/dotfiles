@@ -74,12 +74,12 @@ binds {
     MOD+H                               { focus-column-left; }
     MOD+RIGHT                           { focus-column-right; }
     MOD+L                               { focus-column-right; }
-    MOD+K                               { focus-window-up; }
-    MOD+J                               { focus-window-down; }
+    MOD+BRACKETLEFT                     { focus-window-up; }
+    MOD+BRACKETRIGHT                    { focus-window-down; }
 
     // ───  Consume into tab display ───
-    MOD+SHIFT+CTRL+LEFT                    { consume-or-expel-window-left; }
-    MOD+SHIFT+CTRL+RIGHT                    { consume-or-expel-window-right; }
+    MOD+SHIFT+CTRL+LEFT                 { consume-or-expel-window-left; }
+    MOD+SHIFT+CTRL+RIGHT                { consume-or-expel-window-right; }
     MOD+SHIFT+CTRL+H                    { consume-or-expel-window-left; }
     MOD+SHIFT+CTRL+L                    { consume-or-expel-window-right; }
 
@@ -199,6 +199,14 @@ binds {
         gaps 4 // Gap between windows
         center-focused-column "never" // Don’t auto-center focused column
         always-center-single-column
+
+        tab-indicator {
+          width 6
+          gap 0
+          length total-proportion=1.0
+          position "top"
+          place-within-column
+        }
 
 
         preset-column-widths {
