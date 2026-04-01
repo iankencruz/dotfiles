@@ -1,81 +1,17 @@
 source /usr/share/cachyos-fish-config/cachyos-config.fish
-# ==============================================================================
-# 1. Initializations (Visuals, Prompt, & Tools)
-# ==============================================================================
 
-# --- Fastfetch ---
-function fish_greeting
-  sleep 0.1
-  fastfetch
-end
-
-# --- Oh My Posh ---
-oh-my-posh init fish --config ~/.config/ohmyposh/BurningMelon.toml | source
-
-
-# --- zoxide ---
-# Fish handles its init with a standard function call
-if type -q zoxide
-    zoxide init fish | source
-end
-
-# --- FZF Keybindings (History Search: Ctrl+R) ---
-if type -q fzf
-    # The history search keybinding is defined as a Fish function
-    function fzf_history_widget
-        # The history command output is filtered by fzf.
-        # This is a direct translation of the Zsh history widget logic.
-        history | fzf --no-sort --query="$LBUFFER" | read -l selected_command
-        if [ -n "$selected_command" ]
-            # Fish uses commandline to modify the input buffer
-            commandline -r $selected_command
-        end
-    end
-    # Bind the function to Ctrl+R
-    bind \cr fzf_history_widget
-
-    # --- FZF File/Directory Finder with Preview Widget (Ctrl+F) ---
-    function fzf_file_preview_widget
-        set -l preview_cmd
-        if type -q bat
-            # Show file content with syntax highlighting and line numbers.
-            set preview_cmd "bat --color=always --style=numbers --line-range :200 {}"
-        else
-            # Fallback to simple cat.
-            set preview_cmd "cat {}"
-        end
-
-        set -l result (
-            # Use find to get files and directories, excluding typical junk/hidden folders
-            find . -mindepth 1 \( -path '*/.git' -o -path '*/.cache' -o -path '*/node_modules' \) -prune \
-            -o -type d -print \
-            -o -type f -print \
-            | fzf --ansi --preview "$preview_cmd" --height=80% --layout=reverse --border \
-                --prompt="File/Dir > "
-        )
-
-        # Handle the selection
-        if test -n "$result"
-            if test -d "$result"
-                # If directory, insert 'cd <path>'
-                commandline "cd $result"
-            else
-                # Otherwise, append the file path
-                commandline (commandline)$result
-            end
-        end
-    end
-
-    # Bind the custom widget to Ctrl+F
-    bind \cf fzf_file_preview_widget
-    
-    # Optional: Set custom fzf options here (e.g., theme)
-    # set -gx FZF_DEFAULT_OPTS '--color=...'
+# overwrite greeting
+# potentially disabling fastfetch
+#function fish_greeting
+#    # smth smth
+#end
 
 
 
+# --- Bun ---
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
-end
 
 # --- Yazi File Manager Function ---
 # This is a direct translation of the Zsh function
@@ -91,72 +27,6 @@ end
 
 # Set the preferred editor globally
 set -gx EDITOR "nvim"
-
-# ==============================================================================
-# 2. Hooks and Basic Settings
-# ==============================================================================
-
-# --- Directory Change Hook (eza) ---
-# In Fish, the equivalent of the chpwd hook is the 'fish_postexec' event 
-# combined with a check for the last executed command. However, the simplest 
-# way to emulate a chpwd hook is to overwrite the 'cd' function. 
-# Since zoxide is initializing, the safest way is to use a listener on $PWD.
-# Fish's recommended way is using a function called 'fish_post_cd'.
-
-function fish_post_cd
-    if type -q eza
-        eza -alh --icons=always
-    end
-end
-
-# --- History Configuration ---
-# Fish manages history automatically, but these ensure the variables are set
-set -gx HISTSIZE 10000
-set -gx SAVEHIST 10000
-# Fish does not need manual compinit or zmodload
-
-# --- Mouse Interactivity ---
-# Fish handles mouse interactivity automatically if the terminal supports it.
-# No manual escape codes are usually necessary.
-
-# --- Custom Function for Git Diff ---
-function batdiff
-    git diff --name-only --relative --diff-filter=d -z | xargs -0 bat --diff
-end
-
-
-
-
-
-# ==============================================================================
-# 3. SHELL Aliases
-# ==============================================================================
-# In Fish, aliases are created as simple wrapper functions for better handling.
-
-# Editor Aliases
-alias vim='nvim'          # Use neovim when you type 'vim'
-alias vi='nvim'           # Use neovim when you type 'vi'
-
-# Directory Listing Aliases (using eza)
-alias ls='eza -alh --icons=always'
-alias la='eza -a --icons=always'
-
-# System Navigation/Management
-alias cd='z'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias up='cd ..'
-alias path='echo $PATH'
-alias reload='exec fish' # Quick way to apply changes to this file
-
-# use bat instead of cat for better file output formatting
-alias cat='bat'
-
-# LazyGit Git manager
-alias lg='lazygit'
-
-
-
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
