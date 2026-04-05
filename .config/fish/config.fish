@@ -6,11 +6,22 @@ source /usr/share/cachyos-fish-config/cachyos-config.fish
 #    # smth smth
 #end
 
+# --- zoxide ---
+# Fish handles its init with a standard function call
+if type -q zoxide
+    zoxide init fish | source
+end
+
 
 
 # --- Bun ---
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+fish_add_path /usr/local/go/bin
+
+# Add Go user binaries (standard location)
+fish_add_path $HOME/go/bin
 
 
 # --- Yazi File Manager Function ---
@@ -31,3 +42,28 @@ set -gx EDITOR "nvim"
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+# ==============================================================================
+# 3. SHELL Aliases
+# ==============================================================================
+# Editor Aliases
+alias vim='nvim'          # Use neovim when you type 'vim'
+alias vi='nvim'           # Use neovim when you type 'vi'
+
+# Directory Listing Aliases (using eza)
+alias ls='eza -alh --icons=always'
+alias la='eza -a --icons=always'
+
+# System Navigation/Management
+alias cd='z'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias up='cd ..'
+alias path='echo $PATH'
+alias reload='exec fish' # Quick way to apply changes to this file
+
+# use bat instead of cat for better file output formatting
+alias cat='bat'
+
+# LazyGit Git manager
+alias lg='lazygit'

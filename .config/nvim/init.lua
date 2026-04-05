@@ -43,7 +43,6 @@
 -- this configuration is only a starting point/reference. it is expected that
 -- the user will change the configuration to suit their needs.
 
-
 -- INFO: options
 -- these change the default neovim behaviours using the 'vim.opt' API.
 -- see `:h vim.opt` for more details.
@@ -101,7 +100,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣", }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- preview substitutions live, as you type!
 vim.opt.inccommand = "split"
@@ -122,19 +121,45 @@ vim.opt.expandtab = true
 vim.opt.textwidth = 80
 
 vim.diagnostic.config({
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = " ",
-      [vim.diagnostic.severity.WARN] = " ",
-      [vim.diagnostic.severity.INFO] = " ",
-      [vim.diagnostic.severity.HINT] = " ",
-    },
-  },
-  virtual_text = true, -- show inline diagnostics
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = " ",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.INFO] = " ",
+			[vim.diagnostic.severity.HINT] = " ",
+		},
+	},
+	virtual_text = true, -- show inline diagnostics
 })
+
+-- add templ as filetype
+vim.filetype.add({ extension = { templ = "templ" } })
 
 -- clear search highlights with <Esc>
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+-- INFO: autocommands
+
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+
+-- Highlight yanked text
+local highlight_group = augroup("YankHighlight", { clear = true })
+autocmd("TextYankPost", {
+	pattern = "*",
+	callback = function()
+		vim.highlight.on_yank({ timeout = 170 })
+	end,
+	group = highlight_group,
+})
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "*.templ",
+	callback = function()
+		vim.bo.filetype = "templ"
+		vim.treesitter.start()
+	end,
+})
 
 -- INFO: plugins
 -- we install plugins with neovim's builtin package manager: vim.pack
@@ -155,65 +180,65 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.cmd.colorscheme("catppuccin")
 
 -- INFO: formatting and syntax highlighting
-vim.pack.add({'https://github.com/nvim-treesitter/nvim-treesitter'})
+vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" })
 
 -- equivalent to :TSUpdate
 require("nvim-treesitter.install").update("all")
 
 require("nvim-treesitter").setup({
-  sync_install = true,
+	sync_install = true,
 
-  modules = {},
-  ignore_install = {},
+	modules = {},
+	ignore_install = {},
 
-  ensure_installed = {
-    "lua",
-    "c",
-    "rust",
-    "go",
-  },
+	ensure_installed = {
+		"lua",
+		"c",
+		"rust",
+		"go",
+		"templ",
+		"html",
+	},
 
-  auto_install = true, -- autoinstall languages that are not installed yet
+	auto_install = true, -- autoinstall languages that are not installed yet
 
-  highlight = {
-    enable = true,
-  },
+	highlight = {
+		enable = true,
+	},
 })
 
 -- INFO: completion engine
 vim.pack.add({ "https://github.com/saghen/blink.cmp" }, { confirm = false })
 
 require("blink.cmp").setup({
-  completion = {
-    documentation = {
-      auto_show = true,
-    },
-  },
+	completion = {
+		documentation = {
+			auto_show = true,
+		},
+	},
 
-  keymap = {
-    -- these are the default blink keymaps
-    ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
-    ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
-    ['<C-y>'] = { 'select_and_accept', 'fallback' },
-    ['<C-e>'] = { 'cancel', 'fallback' },
+	keymap = {
+		["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+		["<C-e>"] = { "hide", "fallback" },
+		["<CR>"] = { "accept", "fallback" },
 
-    ['<Tab>'] = { 'snippet_forward', 'select_next', 'fallback' },
-    ['<S-Tab>'] = { 'snippet_backward', 'select_prev', 'fallback' },
-    ['<CR>'] = { 'select_and_accept', 'fallback' },
-    ['<Esc>'] = { 'cancel', 'hide_documentation', 'fallback' },
+		["<Tab>"] = { "snippet_forward", "fallback" },
+		["<S-Tab>"] = { "snippet_backward", "fallback" },
 
-    ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+		["<Up>"] = { "select_prev", "fallback" },
+		["<Down>"] = { "select_next", "fallback" },
+		["<C-k>"] = { "select_prev", "fallback_to_mappings" },
+		["<C-j>"] = { "select_next", "fallback_to_mappings" },
 
-    ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-    ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+		["<C-b>"] = { "scroll_documentation_up", "fallback" },
+		["<C-f>"] = { "scroll_documentation_down", "fallback" },
 
-    ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
-  },
+		["<C-s>"] = { "show_signature", "hide_signature", "fallback" },
+	},
 
-  fuzzy = {
-    implementation = "lua",
-  },
-
+	fuzzy = {
+		implementation = "lua",
+	},
 })
 
 -- INFO: lsp server installation and configuration
@@ -221,49 +246,71 @@ require("blink.cmp").setup({
 -- lsp servers we want to use and their configuration
 -- see `:h lspconfig-all` for available servers and their settings
 local lsp_servers = {
-  lua_ls = {
-    -- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
-    Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) }, },
-  },
-  gopls = {
-    filetypes = {"go", "gomod", "gowork", "gotmpl"}
-  },
+	lua_ls = {
+		-- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
+		Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) } },
+	},
+	gopls = {
+		filetypes = { "go", "gomod", "gowork", "templ" },
+	},
+	templ = {
+		filetypes = { "templ" },
+	},
+	html = {},
 }
 
 vim.pack.add({
-  "https://github.com/neovim/nvim-lspconfig", -- default configs for lsps
+	"https://github.com/neovim/nvim-lspconfig", -- default configs for lsps
 
-  -- NOTE: if you'd rather install the lsps through your OS package manager you
-  -- can delete the next three mason-related lines and their setup calls below.
-  -- see `:h lsp-quickstart` for more details.
-  "https://github.com/mason-org/mason.nvim",                     -- package manager
-  "https://github.com/mason-org/mason-lspconfig.nvim",           -- lspconfig bridge
-  "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" -- auto installer
+	-- NOTE: if you'd rather install the lsps through your OS package manager you
+	-- can delete the next three mason-related lines and their setup calls below.
+	-- see `:h lsp-quickstart` for more details.
+	"https://github.com/mason-org/mason.nvim", -- package manager
+	"https://github.com/mason-org/mason-lspconfig.nvim", -- lspconfig bridge
+	"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", -- auto installer
 }, { confirm = false })
 
 require("mason").setup()
 require("mason-lspconfig").setup()
 require("mason-tool-installer").setup({
-  ensure_installed = vim.tbl_keys(lsp_servers),
+	ensure_installed = vim.tbl_keys(lsp_servers),
 })
 
 -- configure each lsp server on the table
 -- to check what clients are attached to the current buffer, use
 -- `:checkhealth vim.lsp`. to view default lsp keybindings, use `:h lsp-defaults`.
 for server, config in pairs(lsp_servers) do
-  vim.lsp.config(server, {
-    settings = config,
+	vim.lsp.config(server, {
+		settings = config,
 
-    -- only create the keymaps if the server attaches successfully
-    on_attach = function(_, bufnr)
-      vim.keymap.set("n", "grd", vim.lsp.buf.definition,
-        { buffer = bufnr, desc = "vim.lsp.buf.definition()", })
+		-- only create the keymaps if the server attaches successfully
+		on_attach = function(_, bufnr)
+			vim.keymap.set("n", "grd", vim.lsp.buf.definition, { buffer = bufnr, desc = "vim.lsp.buf.definition()" })
 
-      vim.keymap.set("n", "grf", vim.lsp.buf.format,
-        { buffer = bufnr, desc = "vim.lsp.buf.format()", })
-    end,
-  })
+			vim.keymap.set("n", "grf", vim.lsp.buf.format, { buffer = bufnr, desc = "vim.lsp.buf.format()" })
+		end,
+	})
 end
+
+--: conform
+vim.pack.add({
+	{ src = "https://github.com/stevearc/conform.nvim" },
+})
+require("conform").setup({
+	format_on_save = {
+		timeout_ms = 500,
+		lsp_fallback = true,
+	},
+	formatters_by_ft = {
+		lua = { "stylua" },
+		json = { "jq" },
+		rust = { "rustfmt" },
+		python = { "black" },
+		htmldjango = { "djlint" },
+		html = { "djlint" },
+		javascript = { "prettier" },
+	},
+})
 
 -- NOTE: if all you want is lsp + completion + highlighting, you're done.
 -- the rest of the lines are just quality-of-life/appearance plugins and
@@ -271,42 +318,43 @@ end
 
 -- INFO: fuzzy finder
 vim.pack.add({
-  "https://github.com/nvim-lua/plenary.nvim",        -- library dependency
-  "https://github.com/nvim-tree/nvim-web-devicons",  -- icons (nerd font)
-  "https://github.com/nvim-telescope/telescope.nvim" -- the fuzzy finder
+	"https://github.com/nvim-lua/plenary.nvim", -- library dependency
+	"https://github.com/nvim-tree/nvim-web-devicons", -- icons (nerd font)
+	"https://github.com/nvim-telescope/telescope.nvim", -- the fuzzy finder
 }, { confirm = false })
 
 require("telescope").setup({})
 
 local pickers = require("telescope.builtin")
 
-vim.keymap.set("n", "<leader>sp", pickers.builtin, { desc = "[S]earch Builtin [P]ickers", })
-vim.keymap.set("n", "<leader>sb", pickers.buffers, { desc = "[S]earch [B]uffers", })
-vim.keymap.set("n", "<leader>sf", pickers.find_files, { desc = "[S]earch [F]iles", })
-vim.keymap.set("n", "<leader>sw", pickers.grep_string, { desc = "[S]earch Current [W]ord", })
-vim.keymap.set("n", "<leader>sg", pickers.live_grep, { desc = "[S]earch by [G]rep", })
-vim.keymap.set("n", "<leader>sr", pickers.resume, { desc = "[S]earch [R]esume", })
+vim.keymap.set("n", "<leader>sp", pickers.builtin, { desc = "[S]earch Builtin [P]ickers" })
+vim.keymap.set("n", "<leader>sb", pickers.buffers, { desc = "[S]earch [B]uffers" })
+vim.keymap.set("n", "<leader>sf", pickers.find_files, { desc = "[S]earch [F]iles" })
+vim.keymap.set("n", "<leader>sw", pickers.grep_string, { desc = "[S]earch Current [W]ord" })
+vim.keymap.set("n", "<leader>sg", pickers.live_grep, { desc = "[S]earch by [G]rep" })
+vim.keymap.set("n", "<leader>sr", pickers.oldfiles, { desc = "[S]earch [R]ecent" })
+vim.keymap.set("n", "<leader>sk", require("telescope.builtin").pickers, { desc = "[S]earch [K]ached Pickers" })
 
-vim.keymap.set("n", "<leader>sh", pickers.help_tags, { desc = "[S]earch [H]elp", })
-vim.keymap.set("n", "<leader>sm", pickers.man_pages, { desc = "[S]earch [M]anuals", })
+vim.keymap.set("n", "<leader>sh", pickers.help_tags, { desc = "[S]earch [H]elp" })
+vim.keymap.set("n", "<leader>sm", pickers.man_pages, { desc = "[S]earch [M]anuals" })
 
 -- INFO: better statusline
 vim.pack.add({ "https://github.com/nvim-lualine/lualine.nvim" }, { confirm = false })
 
 require("lualine").setup({
-  options = {
-    section_separators = { left = "", right = "", },
-    component_separators = { left = "", right = "", },
-  },
+	options = {
+		section_separators = { left = "", right = "" },
+		component_separators = { left = "", right = "" },
+	},
 })
 
 -- INFO: keybinding helper
 vim.pack.add({ "https://github.com/folke/which-key.nvim" }, { confirm = false })
 
 require("which-key").setup({
-  spec = {
-    { "<leader>s", group = "[S]earch", icon = { icon = "", color = "green", }, },
-  }
+	spec = {
+		{ "<leader>s", group = "[S]earch", icon = { icon = "", color = "green" } },
+	},
 })
 
 -- NOTE: there are many more quality-of-life plugins available and others that
@@ -314,27 +362,64 @@ require("which-key").setup({
 
 -- INFO: utility plugins
 vim.pack.add({
-  "https://github.com/windwp/nvim-autopairs",   -- auto pairs
-  "https://github.com/folke/todo-comments.nvim" -- highlight TODO/INFO/WARN comments
+	"https://github.com/windwp/nvim-autopairs", -- auto pairs
+	"https://github.com/folke/todo-comments.nvim", -- highlight TODO/INFO/WARN comments
 }, { confirm = false })
 
 require("nvim-autopairs").setup()
 require("todo-comments").setup()
 
-
 -- INFO: Oil nvim
 vim.pack.add({
-  'https://github.com/stevearc/oil.nvim', -- Oil.nvim repository URL
-  'https://github.com/nvim-lua/plenary.nvim', -- A dependency for oil.nvim
+	"https://github.com/stevearc/oil.nvim", -- Oil.nvim repository URL
+	"https://github.com/nvim-lua/plenary.nvim", -- A dependency for oil.nvim
 })
 require("oil").setup({
-  view_options = {
-      show_hidden = true,
-  }
+	view_options = {
+		show_hidden = true,
+	},
 })
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
+-- LazyGit
+vim.pack.add({
+	"https://github.com/kdheepak/lazygit.nvim",
+	"https://github.com/nvim-lua/plenary.nvim",
+})
+
+vim.keymap.set("n", "<leader>lg", "<CMD>LazyGit<CR>", { desc = "Open parent directory" })
+
+-- UI2: no more press enter
+require("vim._core.ui2").enable({
+	enable = true,
+	msg = { -- Options related to the message module.
+		---@type 'cmd'|'msg' Default message target, either in the
+		---cmdline or in a separate ephemeral message window.
+		---@type string|table<string, 'cmd'|'msg'|'pager'> Default message target
+		---or table mapping |ui-messages| kinds and triggers to a target.
+		targets = "cmd",
+		cmd = { -- Options related to messages in the cmdline window.
+			height = 0.5, -- Maximum height while expanded for messages beyond 'cmdheight'.
+		},
+		dialog = { -- Options related to dialog window.
+			height = 0.5, -- Maximum height.
+		},
+		msg = { -- Options related to msg window.
+			height = 0.5, -- Maximum height.
+			timeout = 4000, -- Time a message is visible in the message window.
+		},
+		pager = { -- Options related to message window.
+			height = 0.5, -- Maximum height.
+		},
+	},
+})
+
+-- Enable built in Undotree
+vim.cmd("packadd nvim.undotree")
+
+-- Enable built in difftool
+vim.cmd("packadd nvim.difftool")
 
 -- uncomment to enable automatic plugin updates
 -- vim.pack.update()
