@@ -1,0 +1,2 @@
+keybind=ctrl+alt+down=scroll_page_lines:25
+keybind=ctrl+alt+up=scroll_page_lines:-25 

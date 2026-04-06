@@ -120,6 +120,8 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.textwidth = 80
 
+vim.o.confirm = true
+
 vim.diagnostic.config({
 	signs = {
 		text = {
@@ -131,9 +133,6 @@ vim.diagnostic.config({
 	},
 	virtual_text = true, -- show inline diagnostics
 })
-
--- add templ as filetype
-vim.filetype.add({ extension = { templ = "templ" } })
 
 -- clear search highlights with <Esc>
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
@@ -153,7 +152,10 @@ autocmd("TextYankPost", {
 	group = highlight_group,
 })
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+-- add templ as filetype
+vim.filetype.add({ extension = { templ = "templ" } })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*.templ",
 	callback = function()
 		vim.bo.filetype = "templ"
@@ -196,8 +198,9 @@ require("nvim-treesitter").setup({
 		"c",
 		"rust",
 		"go",
-		"templ",
 		"html",
+		"typescript",
+		"svelte",
 	},
 
 	auto_install = true, -- autoinstall languages that are not installed yet
@@ -206,6 +209,10 @@ require("nvim-treesitter").setup({
 		enable = true,
 	},
 })
+
+vim.pack.add({ "https://github.com/romus204/tree-sitter-manager.nvim" })
+
+require("tree-sitter-manager").setup()
 
 -- INFO: completion engine
 vim.pack.add({ "https://github.com/saghen/blink.cmp" }, { confirm = false })
@@ -256,7 +263,9 @@ local lsp_servers = {
 	templ = {
 		filetypes = { "templ" },
 	},
-	html = {},
+	html = {
+		filetypes = { "templ", "html" },
+	},
 }
 
 vim.pack.add({

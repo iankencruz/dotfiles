@@ -214,23 +214,11 @@
                     "textColor": "none"
                 },
                 {
-                    "defaultSettings": {
-                        "autoLaunchSteam": true,
-                        "chatWidthPercent": 25,
-                        "friendsWidthPercent": 10,
-                        "gapSize": 10,
-                        "mainWidthPercent": 60,
-                        "topMarginPercent": 2.5,
-                        "windowHeightPercent": 95
-                    },
-                    "id": "plugin:hyprland-steam-overlay"
-                },
-                {
                     "colorizeDistroLogo": false,
                     "colorizeSystemIcon": "none",
                     "customIconPath": "",
                     "enableColorization": false,
-                    "icon": "power",
+                    "icon": "noctalia",
                     "id": "ControlCenter",
                     "useDistroLogo": false
                 }
@@ -334,7 +322,7 @@
     "desktopWidgets": {
         "enabled": true,
         "gridSnap": true,
-        "gridSnapScale": true,
+        "gridSnapScale": false,
         "monitorWidgets": [
             {
                 "name": "HDMI-A-1",
@@ -346,11 +334,11 @@
                         "format": "HH:mm\\ndddd dd MMMM yyyy",
                         "id": "Clock",
                         "roundedCorners": true,
-                        "scale": 1.6089385474860336,
+                        "scale": 1.7499029519485563,
                         "showBackground": true,
                         "useCustomFont": true,
                         "x": 40,
-                        "y": 320
+                        "y": 40
                     },
                     {
                         "hideMode": "visible",
@@ -362,16 +350,16 @@
                         "showButtons": true,
                         "showVisualizer": true,
                         "visualizerType": "linear",
-                        "x": 40,
-                        "y": 40
+                        "x": 2120,
+                        "y": 200
                     },
                     {
                         "id": "Weather",
                         "roundedCorners": true,
-                        "scale": 1.4069200042577483,
+                        "scale": 1.4682025919605823,
                         "showBackground": true,
-                        "x": 40,
-                        "y": 160
+                        "x": 2120,
+                        "y": 40
                     },
                     {
                         "diskPath": "/",
@@ -380,7 +368,7 @@
                         "roundedCorners": true,
                         "showBackground": true,
                         "statType": "Network",
-                        "x": 40,
+                        "x": 2240,
                         "y": 1280
                     },
                     {
@@ -391,8 +379,8 @@
                         "scale": 1,
                         "showBackground": true,
                         "statType": "Memory",
-                        "x": 40,
-                        "y": 1120
+                        "x": 1960,
+                        "y": 1280
                     },
                     {
                         "diskPath": "/",
@@ -402,8 +390,8 @@
                         "scale": 1,
                         "showBackground": true,
                         "statType": "CPU",
-                        "x": 40,
-                        "y": 960
+                        "x": 1680,
+                        "y": 1280
                     }
                 ]
             }
@@ -739,7 +727,7 @@
         "favorites": [
         ],
         "fillColor": "#000000",
-        "fillMode": "crop",
+        "fillMode": "center",
         "hideWallpaperFilenames": false,
         "linkLightAndDarkWallpapers": true,
         "monitorDirectories": [
@@ -748,7 +736,7 @@
         "overviewEnabled": false,
         "overviewTint": 0.07,
         "panelPosition": "follow_bar",
-        "randomIntervalSec": 1200,
+        "randomIntervalSec": 60,
         "setWallpaperOnAllMonitors": true,
         "showHiddenFiles": false,
         "skipStartupTransition": false,

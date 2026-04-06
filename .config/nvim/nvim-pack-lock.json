@@ -64,6 +64,10 @@
       "rev": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668",
       "src": "https://github.com/folke/todo-comments.nvim"
     },
+    "tree-sitter-manager.nvim": {
+      "rev": "7e288367d46e9781d096c3e29a2f938993008bdc",
+      "src": "https://github.com/romus204/tree-sitter-manager.nvim"
+    },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
       "src": "https://github.com/folke/which-key.nvim"
