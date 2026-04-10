@@ -350,16 +350,16 @@
                         "showButtons": true,
                         "showVisualizer": true,
                         "visualizerType": "linear",
-                        "x": 2120,
-                        "y": 200
+                        "x": 1971,
+                        "y": 243
                     },
                     {
                         "id": "Weather",
                         "roundedCorners": true,
                         "scale": 1.4682025919605823,
                         "showBackground": true,
-                        "x": 2120,
-                        "y": 40
+                        "x": 1971,
+                        "y": 81
                     },
                     {
                         "diskPath": "/",
@@ -368,8 +368,8 @@
                         "roundedCorners": true,
                         "showBackground": true,
                         "statType": "Network",
-                        "x": 2240,
-                        "y": 1280
+                        "x": 2106,
+                        "y": 1188
                     },
                     {
                         "diskPath": "/",
@@ -379,8 +379,8 @@
                         "scale": 1,
                         "showBackground": true,
                         "statType": "Memory",
-                        "x": 1960,
-                        "y": 1280
+                        "x": 1809,
+                        "y": 1188
                     },
                     {
                         "diskPath": "/",
@@ -390,8 +390,8 @@
                         "scale": 1,
                         "showBackground": true,
                         "statType": "CPU",
-                        "x": 1680,
-                        "y": 1280
+                        "x": 1512,
+                        "y": 1188
                     }
                 ]
             }
@@ -544,7 +544,7 @@
         "bluetoothRssiPollingEnabled": false,
         "disableDiscoverability": false,
         "networkPanelView": "wifi",
-        "wifiDetailsViewMode": "grid"
+        "wifiDetailsViewMode": "list"
     },
     "nightLight": {
         "autoSchedule": true,
@@ -736,7 +736,7 @@
         "overviewEnabled": false,
         "overviewTint": 0.07,
         "panelPosition": "follow_bar",
-        "randomIntervalSec": 60,
+        "randomIntervalSec": 1800,
         "setWallpaperOnAllMonitors": true,
         "showHiddenFiles": false,
         "skipStartupTransition": false,

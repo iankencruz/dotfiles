@@ -4,9 +4,9 @@
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 
 output "DP-5" {
-    mode "2560x1440@179.960" // Set resolution and refresh rate
+    // mode "2560x1440@179.960" // Set resolution and refresh rate
 
-    // mode "1920x1080@120.000" // Set resolution and refresh rate
+    mode "1920x1080@120.000" // Set resolution and refresh rate
     scale 1 // No scaling (use 2 for HiDPI)
     position x=0 y=0
 }
@@ -14,5 +14,7 @@ output "DP-5" {
 output "HDMI-A-1" {
     mode "3840x2160@60.000" // Set resolution and refresh rate
     scale 1.6 // No scaling (use 2 for HiDPI)
-    position x=2560 y=0
+    // position x=2560 y=0
+    position x=1920 y=-1080
+    transform "90"
 }
