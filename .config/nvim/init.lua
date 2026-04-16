@@ -258,14 +258,24 @@ local lsp_servers = {
 		Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) } },
 	},
 	gopls = {
-		filetypes = { "go", "gomod", "gowork", "templ" },
+		filetypes = { "go", "gomod", "templ" },
 	},
 	templ = {
 		filetypes = { "templ" },
 	},
 	html = {
-		filetypes = { "templ", "html" },
+		filetypes = { "templ", "html", "svelte" },
 	},
+	ts_ls = {
+		filetypes = {
+			"typescript",
+			"javascript",
+			"javascriptreact",
+			"typescriptreact",
+			"svelte",
+		},
+	},
+	svelte = {},
 }
 
 vim.pack.add({
@@ -317,7 +327,9 @@ require("conform").setup({
 		python = { "black" },
 		htmldjango = { "djlint" },
 		html = { "djlint" },
-		javascript = { "prettier" },
+		javascript = { "prettierd", "prettier" },
+		go = { "goimports", "gofumpt" },
+		svelte = { "prettier" },
 	},
 })
 
