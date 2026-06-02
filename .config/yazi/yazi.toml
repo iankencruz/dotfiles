@@ -8,11 +8,14 @@ edit = [
 open = [
 	{ run = 'xdg-open "$@"', desc = "Open" },
 ]
+imv = [
+    { run = 'imv "$@"', block = true, desc = "imv" }
+]
 
 [open]
 rules = [
   { mime = "application/pdf", use = [ "system_default" ] },
-  { mime = "image/*", use = [ "system_default" ] },
+  { mime = "image/*", use = ["imv", "system_default" ] },
   { mime = "{audio,video}/*", use = [ "system_default" ] },
   { mime = "text/*", use = [ "edit" ] },
 ]
@@ -21,3 +24,8 @@ rules = [
 show_hidden = true
 
 
+[plugin]
+prepend_previewers = [
+    # Intercept all image files and pass them to your imv plugin
+    { mime = "image/*", run = "imv-preview" }
+]

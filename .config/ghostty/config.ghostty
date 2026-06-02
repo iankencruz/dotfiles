@@ -1,4 +1,4 @@
 keybind=ctrl+alt+down=scroll_page_lines:25
 keybind=ctrl+alt+up=scroll_page_lines:-25 
 
-command = TERM=xterm-256color /usr/bin/bash
+command = /usr/bin/fish
