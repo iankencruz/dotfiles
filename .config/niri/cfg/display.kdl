@@ -3,15 +3,15 @@
 // You will have to remove "/-" and edit it before it takes effect.
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 
-output "DP-5" {
+output "DP-2" {
     // mode "2560x1440@179.960" // Set resolution and refresh rate
 
-    mode "1920x1080@120.000" // Set resolution and refresh rate
+    mode "1920x1080@119.879" // Set resolution and refresh rate
     scale 1 // No scaling (use 2 for HiDPI)
     position x=0 y=0
 }
 
-output "HDMI-A-1" {
+output "HDMI-A-2" {
     mode "3840x2160@60.000" // Set resolution and refresh rate
     scale 1.6 // No scaling (use 2 for HiDPI)
     // position x=2560 y=0

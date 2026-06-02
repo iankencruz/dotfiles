@@ -134,6 +134,23 @@ vim.diagnostic.config({
 	virtual_text = true, -- show inline diagnostics
 })
 
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+
+-- Easy Helpers for Window & Splits
+vim.keymap.set("n", "<leader>ws", "<C-w>s", { desc = "Window: Split Horizontal (s)" })
+vim.keymap.set("n", "<leader>wv", "<C-w>v", { desc = "Window: Split Vertical (v)" })
+
+-- 3. Revim.keymap.set window closing and other actions
+vim.keymap.set("n", "<leader>wq", "<C-w>q", { desc = "Window: Close Current (q)" })
+vim.keymap.set("n", "<leader>wc", "<C-w>w", { desc = "Window: Cycle (w)" })
+
+-- Indenting
+vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })
+vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true })
+
 -- clear search highlights with <Esc>
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
@@ -215,13 +232,28 @@ vim.pack.add({ "https://github.com/romus204/tree-sitter-manager.nvim" })
 require("tree-sitter-manager").setup()
 
 -- INFO: completion engine
-vim.pack.add({ "https://github.com/saghen/blink.cmp" }, { confirm = false })
+vim.pack.add({
+	"https://github.com/saghen/blink.lib",
+	"https://github.com/saghen/blink.cmp",
+	"https://github.com/github/copilot.vim",
+})
 
-require("blink.cmp").setup({
-	completion = {
-		documentation = {
-			auto_show = true,
-		},
+-- Prevent Copilot from overriding the <Tab> key so it doesn't conflict with blink
+vim.g.copilot_no_tab_map = true
+
+-- Map a distinct key combination (like Alt + l or Control + y) to accept ghost text
+vim.keymap.set("i", "<M-l>", 'copilot#Accept("\\<CR>")', {
+	expr = true,
+	replace_keycodes = false,
+})
+
+local cmp = require("blink.cmp")
+
+cmp.setup({
+
+	snippets = { preset = "default" }, -- Neovim 0.10+ native snippet engine
+	sources = {
+		default = { "lsp", "path", "snippets", "buffer" },
 	},
 
 	keymap = {
@@ -245,6 +277,11 @@ require("blink.cmp").setup({
 
 	fuzzy = {
 		implementation = "lua",
+	},
+	completion = {
+		documentation = {
+			auto_show = true,
+		},
 	},
 })
 
@@ -275,7 +312,12 @@ local lsp_servers = {
 			"svelte",
 		},
 	},
-	svelte = {},
+	svelte = {
+		filetypes = {
+			"typescript",
+			"svelte",
+		},
+	},
 }
 
 vim.pack.add({
@@ -326,10 +368,11 @@ require("conform").setup({
 		rust = { "rustfmt" },
 		python = { "black" },
 		htmldjango = { "djlint" },
-		html = { "djlint" },
-		javascript = { "prettierd", "prettier" },
+		html = { "oxfmt" },
+		javascript = { "oxfmt", "prettierd" },
+		typescript = { "oxfmt", "prettierd" },
 		go = { "goimports", "gofumpt" },
-		svelte = { "prettier" },
+		svelte = { "oxfmt", "prettierd", "prettier" },
 	},
 })
 
@@ -410,6 +453,55 @@ vim.pack.add({
 })
 
 vim.keymap.set("n", "<leader>lg", "<CMD>LazyGit<CR>", { desc = "Open parent directory" })
+
+-- Trouble
+vim.pack.add({
+	"https://github.com/folke/trouble.nvim",
+})
+
+require("trouble").setup({
+	-- Position of the list: "bottom", "top", "left", "right"
+	auto_close = true, -- Automatically close the list when you have no diagnostics left
+	auto_open = false, -- Automatically open the list when you have diagnostics (usually annoying, keep false)
+	auto_preview = true, -- Automatically open the preview window when hovering an item
+	auto_jump = false, -- Auto jump to the code location when there's only one result
+
+	-- Configuration for window appearance and behavior
+	win = {
+		type = "split", -- Use a standard layout split
+		position = "bottom", -- Open at the bottom of the editor
+		size = 10, -- Height or width of the split window
+	},
+
+	-- Preview window configuration
+	preview = {
+		type = "main", -- Opens the preview right inside your main coding buffer
+		scratch = true, -- Use a scratch buffer if the file isn't loaded yet
+	},
+
+	-- Filter settings (e.g., severe errors vs minor hints)
+	filter = {
+		-- You can filter by severity if you only want to focus on Errors/Warnings:
+		-- severity = vim.diagnostic.severity.ERROR
+	},
+})
+
+vim.keymap.set("n", "<leader>qq", "<CMD>Trouble diagnostics toggle<CR>", { desc = "Diagnostics (Trouble)" })
+vim.keymap.set(
+	"n",
+	"<leader>qQ",
+	"<CMD>Trouble diagnostics toggle filter.buf=0<CR>",
+	{ desc = "Buffer Diagnostics (Trouble)" }
+)
+vim.keymap.set("n", "<leader>cs", "<CMD>Trouble symbols toggle focus=false<CR>", { desc = "Symbols (Trouble)" })
+vim.keymap.set(
+	"n",
+	"<leader>cl",
+	"<CMD>Trouble lsp toggle focus=false win.position=right<CR>",
+	{ desc = "LSP Definitions / references / ... (Trouble)" }
+)
+vim.keymap.set("n", "<leader>qL", "<CMD>Trouble loclist toggle<CR>", { desc = "Location List (Trouble)" })
+vim.keymap.set("n", "<leader>qX", "<CMD>Trouble qflist toggle<CR>", { desc = "Quickfix List (Trouble)" })
 
 -- UI2: no more press enter
 require("vim._core.ui2").enable({

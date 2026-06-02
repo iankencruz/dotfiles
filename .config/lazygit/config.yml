@@ -1,7 +1,16 @@
+gui:
+  # Controls the width of the side panels (status, files, branches, etc.)
+  # A lower value (like 0.33) leaves more room for the diff preview pane.
+  sidePanelWidth: 0.33
+  # Determines layout behavior. 'auto' switches between horizontal 
+  # and vertical splits depending on your window size.
+  screenMode: 'auto'
+  # If you want to skip the stash/command logs to give the diff pane 
+  # more vertical room when columns are stacked:
+  expandFocusedSidePanel: false
 git:
   pagers:
-    - colorArg: always
-      pager: delta --dark --paging=never
-notARepository: quit
-promptToReturnFromSubprocess: false
-disableStartupPopups: false
+    - # Optional: Uses delta or diff-so-fancy if you have them installed 
+      # for cleaner diff previews inside the pane.
+      colorArg: always
+      pager: ""

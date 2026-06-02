@@ -4,9 +4,17 @@
       "rev": "a62e1083a3cfe8b6b206e7d3d33a51091df25357",
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
+    "blink-copilot": {
+      "rev": "7ad8209b2f880a2840c94cdcd80ab4dc511d4f39",
+      "src": "https://github.com/fang2hou/blink-copilot"
+    },
     "blink.cmp": {
       "rev": "5e088706d92da09949e081cc4d49e2c9ba8cfc8c",
       "src": "https://github.com/saghen/blink.cmp"
+    },
+    "blink.lib": {
+      "rev": "c09dd66e9ad97e1a7777f3fa5f0504ca2e877231",
+      "src": "https://github.com/saghen/blink.lib"
     },
     "command.nvim": {
       "rev": "fe80df22c837d587d078842ace2e64656928789f",
@@ -115,6 +123,10 @@
     "tree-sitter-manager.nvim": {
       "rev": "7e288367d46e9781d096c3e29a2f938993008bdc",
       "src": "https://github.com/romus204/tree-sitter-manager.nvim"
+    },
+    "trouble.nvim": {
+      "rev": "bd67efe408d4816e25e8491cc5ad4088e708a69a",
+      "src": "https://github.com/folke/trouble.nvim"
     },
     "vim-fugitive": {
       "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
