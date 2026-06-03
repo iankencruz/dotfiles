@@ -74,10 +74,10 @@ binds {
     MOD+SHIFT+CTRL+L                    { consume-or-expel-window-right; }
 
 
-    MOD+COMMA                      { focus-monitor-left; }
-    MOD+PERIOD                     { focus-monitor-right; }
-    MOD+SHIFT+COMMA                 { move-column-to-monitor-left; }
-    MOD+SHIFT+PERIOD                { move-column-to-monitor-right; }
+    MOD+CTRL+LEFT                      { focus-monitor-left; }
+    MOD+CTRL+RIGHT                     { focus-monitor-right; }
+    MOD+ALT+LEFT                       { move-column-to-monitor-left; }
+    MOD+ALT+RIGHT                      { move-column-to-monitor-right; }
 
 
 
