@@ -7,8 +7,7 @@
 -- if you're completely new to neovim and/or vim, consider going through
 -- `:Tutor` inside neovim to get a basic idea of how it works.
 --     if you don't know what this means, type the following:
---       - <escape key>
---       - :
+--       - <escape key> - :
 --       - Tutor
 --       - <enter key>
 --
@@ -114,6 +113,9 @@ vim.opt.hlsearch = true
 -- enable line wrapping
 vim.opt.wrap = true
 
+-- scroll off
+vim.opt.scrolloff = 15
+
 -- formatting
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -134,6 +136,9 @@ vim.diagnostic.config({
 	virtual_text = true, -- show inline diagnostics
 })
 
+-- Center the screen vertically when jumping to the end of the file
+-- vim.keymap.set('n', 'G', 'Gzz', { noremap = true, silent = true })
+
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
@@ -153,6 +158,21 @@ vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true })
 
 -- clear search highlights with <Esc>
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+-- folding
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
+
+vim.opt.foldlevel = 99 -- open all folds by default
+vim.opt.foldlevelstart = 99
+vim.opt.foldcolumn = "1"
+
+vim.opt.fillchars = {
+	fold = " ", -- Removes the trailing legacy dashes on folded lines
+	foldopen = "", -- Sleek down chevron (material/lucide style)
+	foldclose = "", -- Sleek right chevron
+	foldinner = " ", -- Keeps nested levels completely clean
+}
 
 -- INFO: autocommands
 
@@ -362,9 +382,18 @@ require("conform").setup({
 		timeout_ms = 500,
 		lsp_fallback = true,
 	},
+	formatters = {
+		sleek = {
+			command = "sleek",
+			args = { "-U", "true", "-l", "1" },
+			stdin = true,
+		},
+	},
 	formatters_by_ft = {
 		lua = { "stylua" },
 		json = { "jq" },
+		sql = { "sleek" },
+		pgsql = { "sleek" },
 		rust = { "rustfmt" },
 		python = { "black" },
 		htmldjango = { "djlint" },
@@ -397,7 +426,17 @@ vim.keymap.set("n", "<leader>ff", pickers.find_files, { desc = "[F]ind [F]iles" 
 vim.keymap.set("n", "<leader>fw", pickers.grep_string, { desc = "[F]ind Current [W]ord" })
 vim.keymap.set("n", "<leader>fg", pickers.live_grep, { desc = "[F]ind by [G]rep" })
 vim.keymap.set("n", "<leader>fr", pickers.oldfiles, { desc = "[F]ind [R]ecent" })
-vim.keymap.set("n", "<leader>fk", require("telescope.builtin").pickers, { desc = "[F]earch [K]ached Pickers" })
+vim.keymap.set("n", "<leader>fk", require("telescope.builtin").pickers, { desc = "[F]ind [K]ached Pickers" })
+
+vim.keymap.set("n", "<leader>fds", function()
+	require("telescope.builtin").lsp_document_symbols({
+		symbols = { "Function", "Method", "Class", "Interface", "Struct" }, -- Filter for specific symbol types
+		symbol_width = 40, -- Give the symbol name more horizontal space
+		symbol_type_width = 15, -- Width for the type column (e.g., [Function])
+		show_line = false, -- Show the line number where the symbol is found
+		layout_strategy = "horizontal", -- Choose layout (horizontal, vertical, center)
+	})
+end, { desc = "[F]ind [D]ocument [S]ymbols" })
 
 vim.keymap.set("n", "<leader>fh", pickers.help_tags, { desc = "[F]ind [H]elp" })
 vim.keymap.set("n", "<leader>fm", pickers.man_pages, { desc = "[F]ind [M]anuals" })
@@ -533,6 +572,357 @@ vim.cmd("packadd nvim.undotree")
 
 -- Enable built in difftool
 vim.cmd("packadd nvim.difftool")
+
+-- ==========================================================================
+-- 1. Package Installation (vim.pack)
+-- ==========================================================================
+
+vim.pack.add({
+	"https://github.com/mfussenegger/nvim-dap",
+})
+
+vim.pack.add({
+	"https://github.com/leoluz/nvim-dap-go",
+})
+
+vim.pack.add({
+	{ src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.*") },
+})
+
+-- ==========================================================================
+-- 2. Configuration & Signs
+-- ==========================================================================
+
+local dap = require("dap")
+local dap_go = require("dap-go")
+local dap_view = require("dap-view")
+
+-- Visual Signs (Left gutter signs)
+vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError", linehl = "", numhl = "" })
+vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn", linehl = "", numhl = "" })
+vim.fn.sign_define("DapLogPoint", { text = "💬", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
+vim.fn.sign_define(
+	"DapStopped",
+	{ text = "▶️", texthl = "DiagnosticHint", linehl = "Visual", numhl = "DiagnosticHint" }
+)
+vim.fn.sign_define("DapBreakpointRejected", { text = "🚫", texthl = "DiagnosticError", linehl = "", numhl = "" })
+
+-- 1. Run the base setup first (this generates the internal defaults)
+dap_go.setup()
+
+-- 2. Forcefully wipe out the defaults and assign ONLY your absolute target
+dap.configurations.go = {
+	{
+		type = "go",
+		name = "Debug App (cmd/app)",
+		request = "launch",
+		program = function()
+			local workspace = vim.fn.getcwd()
+			local cmd_path = workspace .. "/cmd"
+
+			-- Check if /cmd folder exists in this project workspace root
+			if vim.fn.isdirectory(cmd_path) == 1 then
+				-- Scan the /cmd folder for subdirectories
+				local handle = vim.loop.fs_scandir(cmd_path)
+				if handle then
+					while true do
+						local name, type = vim.loop.fs_scandir_next(handle)
+						if not name then
+							break
+						end
+
+						-- If it finds a directory inside /cmd/ (like 'app', 'api', 'server')
+						-- it returns that full path to Delve instantly.
+						if type == "directory" then
+							return cmd_path .. "/" .. name
+						end
+					end
+				end
+
+				-- Fallback if cmd/ is empty but exists
+				return cmd_path
+			end
+
+			-- Ultimate project fallback: just use the active workspace root directory
+			return workspace
+		end,
+	},
+}
+
+dap_view.setup({
+	winbar = {
+
+		show = true,
+		-- You can add a "console" section to merge the terminal with the other views
+		sections = { "scopes", "breakpoints", "threads", "watches", "exceptions" },
+		-- Must be one of the sections declared above
+		default_section = "scopes",
+		-- Append hints with keymaps within the labels
+		show_keymap_hints = true,
+		-- List of up to 2 strings, defining left and right separators
+		separators = nil,
+		-- Configure each section individually
+		base_sections = {
+			-- Labels can be set dynamically with functions
+			-- Each function receives the window's width and the current section as arguments
+			breakpoints = { label = "Breakpoints", keymap = "B" },
+			scopes = { label = "Scopes", keymap = "S" },
+			exceptions = { label = "Exceptions", keymap = "E" },
+			watches = { label = "Watches", keymap = "W" },
+			threads = { label = "Threads", keymap = "T" },
+			sessions = { label = "Sessions", keymap = "K" },
+			console = { label = "Console", keymap = "C" },
+		},
+		-- Add your own sections
+		custom_sections = {},
+		controls = {
+			enabled = true,
+			buttons = { "play", "step_into", "step_over", "step_out", "term_restart", "fun" },
+			custom_buttons = {
+				fun = {
+					render = function()
+						return "🎉"
+					end,
+					action = function()
+						vim.print("🎊")
+					end,
+				},
+				-- Stop | Restart
+				-- Double click, middle click or click with a modifier disconnect instead of stopping
+				term_restart = {
+					render = function(session)
+						local group = session and "ControlTerminate" or "ControlRunLast"
+						local icon = session and "" or ""
+						return "%#NvimDapView" .. group .. "#" .. icon .. "%*"
+					end,
+					action = function(clicks, button, modifiers)
+						local dap = require("dap")
+						local alt = clicks > 1 or button ~= "l" or modifiers:gsub(" ", "") ~= ""
+						if not dap.session() then
+							dap.run_last()
+						elseif alt then
+							dap.disconnect()
+						else
+							dap.terminate()
+						end
+					end,
+				},
+			},
+		},
+	},
+	windows = {
+		size = 0.25,
+		position = "below",
+		terminal = {
+			size = 0.5,
+			position = "left",
+			-- List of debug adapters for which the terminal should be ALWAYS hidden
+			-- Can also be set to "true" to never show the terminal
+			hide = {},
+		},
+	},
+	-- Bindings can be disabled by assigning to an empty table
+	keymaps = {
+		scopes = {
+			toggle = { "<CR>", "<2-LeftMouse>" },
+			jump_to_parent = "[[",
+			set_value = "s",
+		},
+		watches = {
+			toggle = { "<CR>", "<2-LeftMouse>" },
+			jump_to_parent = "[[",
+			set_value = "s",
+			copy_value = "c",
+			delete_expression = "d",
+			append_expression = "a",
+			insert_expression = "i",
+			edit_expression = "e",
+		},
+		hover = {
+			quit = "q",
+			toggle = { "<CR>", "<2-LeftMouse>" },
+			jump_to_parent = "[[",
+			set_value = "s",
+		},
+		help = {
+			quit = "q",
+		},
+		console = {
+			next_session = "]s",
+			prev_session = "[s",
+		},
+		threads = {
+			toggle_subtle_frames = "t",
+			filter = "f",
+			invert_filter = "o",
+			jump_to_frame = { "<CR>", "<2-LeftMouse>" },
+			force_jump = "<C-w><CR>",
+		},
+		exceptions = {
+			toggle_filter = { "<CR>", "<2-LeftMouse>" },
+		},
+		sessions = {
+			switch_session = { "<CR>", "<2-LeftMouse>" },
+		},
+		breakpoints = {
+			delete_breakpoint = "d",
+			jump_to_breakpoint = { "<CR>", "<2-LeftMouse>" },
+			force_jump = "<C-w><CR>",
+		},
+		base = {
+			next_view = "]v",
+			prev_view = "[v",
+			jump_to_first = "[V",
+			jump_to_last = "]V",
+			help = "g?",
+		},
+	},
+	icons = {
+		collapsed = "󰅂 ",
+		disabled = "",
+		disconnect = "",
+		enabled = "",
+		expanded = "󰅀 ",
+		filter = "󰈲",
+		negate = " ",
+		pause = "",
+		play = "",
+		run_last = "",
+		step_back = "",
+		step_into = "",
+		step_out = "",
+		step_over = "",
+		terminate = "",
+	},
+	help = {
+		border = nil,
+	},
+	hover = {
+		border = nil,
+	},
+	render = {
+		-- Optionally a function that takes two `dap.Variable`'s as arguments
+		-- and is forwarded to a `table.sort` when rendering variables in the scopes view
+		sort_variables = nil,
+		-- Full control of how frames are rendered, see the "Custom Formatting" page
+		threads = {
+			-- Choose which items to display and how
+			format = function(name, lnum, path)
+				return {
+					{ part = name, separator = " " },
+					{ part = path, hl = "FileName", separator = ":" },
+					{ part = lnum, hl = "LineNumber" },
+				}
+			end,
+			-- Align columns
+			align = false,
+		},
+		-- Full control of how breakpoints are rendered, see the "Custom Formatting" page
+		breakpoints = {
+			-- Choose which items to display and how
+			format = function(line, lnum, path)
+				return {
+					{ part = path, hl = "FileName" },
+					{ part = lnum, hl = "LineNumber" },
+					{ part = line, hl = true },
+				}
+			end,
+			-- Align columns
+			align = false,
+		},
+	},
+	-- Requires neovim 0.12+
+	virtual_text = {
+		-- Control with `DapViewVirtualTextToggle`
+		enabled = false,
+		-- Supported options include "inline", "eol", and "eol_right_align"
+		position = "inline",
+		format = function(variable, _, _)
+			return " " .. variable.value
+		end,
+		-- Prepend the variable name (when using eol positioning)
+		prefix = function(position, node, bufnr)
+			if position == "eol" or position == "eol_right_align" then
+				local name = vim.treesitter.get_node_text(node, bufnr)
+
+				return name .. " ="
+			end
+		end,
+		-- Add commas between variables (when using eol positioning)
+		suffix = function(position, _, _, var_index, num_var_line)
+			if position == "eol" or position == "eol_right_align" then
+				return var_index == num_var_line and "" or ","
+			end
+		end,
+	},
+	-- Controls how to jump when selecting a breakpoint or navigating the stack
+	-- Comma separated list, like the built-in 'switchbuf'. See :help 'switchbuf'
+	-- Only a subset of the options is available: newtab, useopen, usetab and uselast
+	-- Can also be a function that takes the current winnr and the destination bufnr
+	-- If a function, should return the winnr of the destination window
+	switchbuf = "usetab,uselast",
+	-- Auto open when a session is started and auto close when all sessions finish
+	-- Alternatively, can be a string:
+	-- - "keep_terminal": as above, but keeps the terminal when the session finishes
+	-- - "open_term": open the terminal when starting a new session, nothing else
+	auto_toggle = false,
+	-- Reopen dapview when switching to a different tab
+	-- Can also be a function to dynamically choose when to follow, by returning a boolean
+	-- If a function, receives the name of the adapter for the current session as an argument
+	follow_tab = false,
+})
+
+-- ==========================================================================
+-- 3. Automation (Fixing the 'dap-view' listener collision)
+-- ==========================================================================
+
+-- Changing the listener key to "my_go_debug" ensures nvim-dap doesn't confuse
+-- the UI commands with a language profile config.
+dap.listeners.before.attach.my_go_debug = function()
+	dap_view.open()
+	print("🐞 Debugger: Connected/Attached")
+end
+
+dap.listeners.before.launch.my_go_debug = function()
+	dap_view.open()
+	print("🚀 Debugger: Process Launched & Running...")
+end
+
+dap.listeners.before.event_terminated.my_go_debug = function()
+	dap_view.close()
+	print("⏹️ Debugger: Session Terminated")
+end
+
+dap.listeners.before.event_exited.my_go_debug = function()
+	dap_view.close()
+	print("🏁 Debugger: Process Exited")
+end
+
+-- ==========================================================================
+-- 4. Keymaps
+-- ==========================================================================
+
+vim.keymap.set("n", "<leader>db", function()
+	dap.toggle_breakpoint()
+end, { desc = "Debug: Toggle Breakpoint" })
+vim.keymap.set("n", "<leader>dc", function()
+	dap.continue()
+end, { desc = "Debug: Start / Continue" })
+vim.keymap.set("n", "<leader>di", function()
+	dap.step_into()
+end, { desc = "Debug: Step Into" })
+vim.keymap.set("n", "<leader>do", function()
+	dap.step_over()
+end, { desc = "Debug: Step Over" })
+vim.keymap.set("n", "<leader>dt", function()
+	dap.terminate()
+end, { desc = "Debug: Terminate Session" })
+vim.keymap.set("n", "<leader>dgt", function()
+	dap_go.debug_test()
+end, { desc = "Debug: Go Nearest Test" })
+vim.keymap.set("n", "<leader>dv", function()
+	dap_view.toggle()
+end, { desc = "Debug: Toggle UI View" })
 
 -- uncomment to enable automatic plugin updates
 -- vim.pack.update()
