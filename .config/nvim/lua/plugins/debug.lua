@@ -17,8 +17,13 @@ return {
         { text = "▶️", texthl = "DiagnosticHint", linehl = "Visual", numhl = "DiagnosticHint" })
       vim.fn.sign_define("DapBreakpointRejected", { text = "🚫", texthl = "DiagnosticError", linehl = "", numhl = "" })
 
+      local dap = require('dap')
+      local dap_go = require('dap-go')
+
+      -- 1. Initialize dap-go normally
       dap_go.setup()
 
+      -- 2. Completely overwrite the configuration table with ONLY your choices
       dap.configurations.go = {
         {
           type = "go",
@@ -29,10 +34,10 @@ return {
             local cmd_path = workspace .. "/cmd"
 
             if vim.fn.isdirectory(cmd_path) == 1 then
-              local handle = vim.loop.fs_scandir(cmd_path)
+              local handle = vim.uv.fs_scandir(cmd_path)
               if handle then
                 while true do
-                  local name, type = vim.loop.fs_scandir_next(handle)
+                  local name, type = vim.uv.fs_scandir_next(handle)
                   if not name then
                     break
                   end
@@ -46,7 +51,31 @@ return {
             return workspace
           end,
         },
+        {
+          type = "go",
+          name = "Debug App (Prompt for Folder/File)",
+          request = "launch",
+          program = function()
+            -- This opens a Neovim input prompt for you to specify the path
+            local path = vim.fn.input("Path to main.go or folder: ", vim.fn.getcwd() .. "/", "file")
+
+            -- Return the entered path, or fallback to workspace root if empty
+            if path == "" then
+              return vim.fn.getcwd()
+            end
+            return path
+          end,
+        },
+        {
+          type = "go",
+          name = "Attach",
+          request = "attach",
+          mode = "local",
+          processId = require('dap.utils').pick_process,
+        },
       }
+
+
 
       -- Mappings
       vim.keymap.set("n", "<leader>db", function() dap.toggle_breakpoint() end, { desc = "Debug: Toggle Breakpoint" })
@@ -64,7 +93,7 @@ return {
     opts = {
       winbar = {
         show = true,
-        sections = { "scopes", "breakpoints", "threads", "watches", "exceptions" },
+        sections = { "scopes", "breakpoints", "threads", "watches", "repl", "exceptions", "console" },
         default_section = "scopes",
         show_keymap_hints = true,
         separators = nil,
@@ -74,37 +103,25 @@ return {
           exceptions = { label = "Exceptions", keymap = "E" },
           watches = { label = "Watches", keymap = "W" },
           threads = { label = "Threads", keymap = "T" },
+          repl = { label = "REPL", keymap = "R" },
           sessions = { label = "Sessions", keymap = "K" },
           console = { label = "Console", keymap = "C" },
         },
         custom_sections = {},
         controls = {
           enabled = true,
-          buttons = { "play", "step_into", "step_over", "step_out", "term_restart", "fun" },
-          custom_buttons = {
-            fun = {
-              render = function() return "🎉" end,
-              action = function() vim.print("🎊") end,
-            },
-            term_restart = {
-              render = function(session)
-                local group = session and "ControlTerminate" or "ControlRunLast"
-                local icon = session and "" or ""
-                return "%#NvimDapView" .. group .. "#" .. icon .. "%*"
-              end,
-              action = function(clicks, button, modifiers)
-                local dap_inst = require("dap")
-                local alt = clicks > 1 or button ~= "l" or modifiers:gsub(" ", "") ~= ""
-                if not dap_inst.session() then
-                  dap_inst.run_last()
-                elseif alt then
-                  dap_inst.disconnect()
-                else
-                  dap_inst.terminate()
-                end
-              end,
-            },
+          position = "right",
+          buttons = {
+            "play",
+            "step_into",
+            "step_over",
+            "step_out",
+            "step_back",
+            "run_last",
+            "terminate",
+            "disconnect",
           },
+          custom_buttons = {},
         },
       },
       windows = {
@@ -188,7 +205,7 @@ return {
         end,
       },
       switchbuf = "usetab,uselast",
-      auto_toggle = false,
+      auto_toggle = "open_term",
       follow_tab = false,
     },
     config = function(_, opts)
