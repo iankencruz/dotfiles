@@ -1,12 +1,12 @@
 [opener]
 system_default = [
-  { run = "xdg-open \"$1\"", desc = "System Default", for = "linux" }
+    { run = 'xdg-open "$1"', desc = "System Default", for = "linux" }
 ]
 edit = [
     { run = 'nvim "$@"', block = true, desc = "Edit with Neovim" }
 ]
 open = [
-	{ run = 'xdg-open "$@"', desc = "Open" },
+    { run = 'xdg-open "$@"', desc = "Open" }
 ]
 imv = [
     { run = 'imv "$@"', block = true, desc = "imv" }
@@ -14,18 +14,17 @@ imv = [
 
 [open]
 rules = [
-  { mime = "application/pdf", use = [ "system_default" ] },
-  { mime = "image/*", use = ["imv", "system_default" ] },
-  { mime = "{audio,video}/*", use = [ "system_default" ] },
-  { mime = "text/*", use = [ "edit" ] },
+    { url = "*.lua", use = [ "edit" ] },
+    { mime = "text/*", use = [ "edit" ] },
+    { mime = "application/pdf", use = [ "system_default" ] },
+    { mime = "image/*", use = [ "imv", "system_default" ] },
+    { mime = "{audio,video}/*", use = [ "system_default" ] }
 ]
 
 [mgr]
 show_hidden = true
 
-
 [plugin]
 prepend_previewers = [
-    # Intercept all image files and pass them to your imv plugin
     { mime = "image/*", run = "imv-preview" }
 ]
