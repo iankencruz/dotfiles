@@ -12,6 +12,10 @@ if type -q zoxide
     zoxide init fish | source
 end
 
+# Zig Version Manager (ZVM) Configuration
+set -gx ZVM_INSTALL "$HOME/.zvm/self"
+fish_add_path "$ZVM_INSTALL"
+fish_add_path "$HOME/.zvm/bin"
 
 
 # --- Bun ---
@@ -67,3 +71,4 @@ alias cat='bat'
 
 # LazyGit Git manager
 alias lg='lazygit'
+alias ll='lazyjj'

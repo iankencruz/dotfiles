@@ -14,6 +14,7 @@ return {
         "html",
         "typescript",
         "svelte",
+        "zig"
       },
       auto_install = true,
       highlight = {

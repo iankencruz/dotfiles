@@ -68,6 +68,22 @@ return {
         },
         {
           type = "go",
+          name = "Debug Test (Current File/Directory)",
+          request = "launch",
+          mode = "test",
+          console = "integratedTerminal",
+          program = "${fileDirname}",
+        },
+        {
+          type = "go",
+          name = "Debug All Tests (Workspace)",
+          request = "launch",
+          mode = "test",
+          console = "integratedTerminal",
+          program = "./...",
+        },
+        {
+          type = "go",
           name = "Attach",
           request = "attach",
           mode = "local",
@@ -189,15 +205,22 @@ return {
         },
       },
       virtual_text = {
+        -- Control with `DapViewVirtualTextToggle`
         enabled = false,
+        -- Supported options include "inline", "eol", and "eol_right_align"
         position = "inline",
-        format = function(variable, _, _) return " " .. variable.value end,
+        format = function(variable, _, _)
+          return " " .. variable.value
+        end,
+        -- Prepend the variable name (when using eol positioning)
         prefix = function(position, node, bufnr)
           if position == "eol" or position == "eol_right_align" then
             local name = vim.treesitter.get_node_text(node, bufnr)
+
             return name .. " ="
           end
         end,
+        -- Add commas between variables (when using eol positioning)
         suffix = function(position, _, _, var_index, num_var_line)
           if position == "eol" or position == "eol_right_align" then
             return var_index == num_var_line and "" or ","

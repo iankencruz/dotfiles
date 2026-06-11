@@ -35,6 +35,9 @@ return {
             "svelte",
           },
         },
+        zls = {
+          filetypes = { "zig" },
+        }
       }
 
       require("mason").setup()
