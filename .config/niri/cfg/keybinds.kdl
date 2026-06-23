@@ -117,20 +117,29 @@ binds {
     Mod+Shift+8                          { move-column-to-workspace 8; }
     Mod+Shift+9                          { move-column-to-workspace 9; }
 
-    Mod+TAB                             { focus-workspace-previous; }
+    // Mod+TAB                             { focus-workspace-previous; }
 
     // ─── Layout Controls ───
-    Mod+CTRL+F                          { expand-column-to-available-width; }
-    Mod+C                               { center-column; }
+        Mod+C                               { center-column; }
     Mod+CTRL+C                          { center-visible-columns; }
     Mod+Minus                           { set-column-width "-10%"; }
     Mod+Equal                           { set-column-width "+10%"; }
     Mod+Shift+Minus                     { set-window-height "-10%"; }
     Mod+Shift+Equal                     { set-window-height "+10%"; }
 
+    Mod+R       hotkey-overlay-title="Cycle preset widths" { switch-preset-column-width; }
+    Mod+Shift+R hotkey-overlay-title="Cycle preset heights" { switch-preset-window-height; }
+    Mod+Ctrl+R  hotkey-overlay-title="Reset window height" { reset-window-height; }
+
     // ─── Modes ───
     Mod+T                               { toggle-window-floating; }
-    Mod+F                               { fullscreen-window; }
+    Mod+CTRL+T                          { switch-focus-between-floating-and-tiling; }
+
+    Mod+F       hotkey-overlay-title="Maximize column" { maximize-column; }
+    Mod+Shift+F hotkey-overlay-title="Full screen window" { fullscreen-window; }
+    Mod+Ctrl+F  hotkey-overlay-title="Fill empty column space" { expand-column-to-available-width; }
+
+
     Mod+W                               { toggle-column-tabbed-display; }
 
     // ─── Screenshots ───
@@ -146,5 +155,5 @@ binds {
     // ─── Exit / Power ───
     CTRL+ALT+Delete                     { quit; } // Also quits Niri
     Mod+Shift+P                         { power-off-monitors; } // Turn off screens (useful for OLED or privacy)
-    Mod+O                               repeat=false { toggle-overview; }
+    Mod+TAB                               repeat=false { toggle-overview; }
 }
