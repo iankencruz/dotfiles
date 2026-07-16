@@ -20,9 +20,27 @@ window-rule {
 }
 
 
+workspace "chat" {
+    open-on-output "DP-5"
+}
+
+window-rule {
+  // Unset on this workspace.
+  match at-startup=true app-id="discord" 
+  open-maximized-to-edges true
+  open-on-workspace "chat"
+}
+
+
+// steam
+/////////
+workspace "steam" {
+    open-on-output "DP-2"
+}
+
 window-rule {
     match app-id="steam$" title="^Picture-in-Picture$"
-    open-on-output "DP-4"
+    open-on-output "DP-2"
     open-maximized-to-edges true
     open-on-workspace "steam"
 }
@@ -31,18 +49,12 @@ window-rule {
     match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
     default-floating-position x=0 y=0 relative-to="bottom-right"
     open-focused false
-}
-
-window-rule {
-    match app-id="cs2" 
-    open-on-output "DP-4"
-    open-maximized-to-edges true
     open-on-workspace "steam"
 }
 
 window-rule {
-  // Unset on this workspace.
-  match app-id="vesktop$" 
-  open-maximized-to-edges true
-  open-on-output "DP-5"
+    match app-id="cs2" 
+    open-on-output "DP-2"
+    open-maximized-to-edges true
+    open-on-workspace "steam"
 }
