@@ -59,7 +59,7 @@ vim.opt.hlsearch = true
 vim.opt.wrap = true
 
 -- scroll off
-vim.opt.scrolloff = 15
+vim.opt.scrolloff = 30
 
 -- formatting
 vim.opt.tabstop = 2
@@ -70,15 +70,15 @@ vim.opt.textwidth = 80
 vim.o.confirm = true
 
 vim.diagnostic.config({
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = " ",
-			[vim.diagnostic.severity.WARN] = " ",
-			[vim.diagnostic.severity.INFO] = " ",
-			[vim.diagnostic.severity.HINT] = " ",
-		},
-	},
-	virtual_text = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+    },
+  },
+  virtual_text = true,
 })
 
 -- folding
@@ -90,8 +90,8 @@ vim.opt.foldlevelstart = 99
 vim.opt.foldcolumn = "1"
 
 vim.opt.fillchars = {
-	fold = " ",
-	foldopen = "",
-	foldclose = "",
-	foldinner = " ",
+  fold = " ",
+  foldopen = "",
+  foldclose = "",
+  foldinner = " ",
 }

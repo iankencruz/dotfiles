@@ -16,6 +16,24 @@ imv = [
 rules = [
     { url = "*.lua", use = [ "edit" ] },
     { mime = "text/*", use = [ "edit" ] },
+    { mime = "*.txt", use = [ "edit" ] },
+    { mime = "*.json", use = [ "edit" ] },
+    { mime = "*.sh", use = "edit" },
+    { mime = "*.toml", use = "edit" },
+    { mime = "*.y*ml", use = "edit" },
+    { mime = "*config", use = "edit" },
+    { mime = "*.cfg", use = "edit" },
+    { mime = "*env", use = "edit" },
+    { mime = "*.d", use = "edit" },
+    { mime = "*.md", use = "edit" },
+    { mime = "*.txt", use = "edit" },
+    { mime = ".zsh*", use = "edit" },
+    { mime = "*.ini", use = "edit" },
+    { mime = "*.lua", use = "edit" },
+    { mime = "*.xml", use = "edit" },
+    { mime = "*.log", use = "edit" },
+
+
     { mime = "application/pdf", use = [ "system_default" ] },
     { mime = "image/*", use = [ "imv", "system_default" ] },
     { mime = "{audio,video}/*", use = [ "system_default" ] }

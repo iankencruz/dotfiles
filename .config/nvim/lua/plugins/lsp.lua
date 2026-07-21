@@ -20,6 +20,15 @@ return {
         html = {
           filetypes = { "templ", "html", "svelte" },
         },
+        tailwindcss = {
+          filetypes = {
+            "typescript",
+            "javascript",
+            "javascriptreact",
+            "typescriptreact",
+            "svelte",
+          },
+        },
         ts_ls = {
           filetypes = {
             "typescript",

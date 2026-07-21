@@ -6,8 +6,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit...", "HydraHint" },
+      { out,                            "WarningMsg" },
+      { "\nPress any key to exit...",   "HydraHint" },
     }, true, {})
     vim.fn.getchar()
     os.exit(1)
@@ -35,23 +35,23 @@ vim.cmd.colorscheme("catppuccin")
 
 -- UI2: no more press enter
 require("vim._core.ui2").enable({
-	enable = true,
-	msg = {
-		targets = "cmd",
-		cmd = {
-			height = 0.5,
-		},
-		dialog = {
-			height = 0.5,
-		},
-		msg = {
-			height = 0.5,
-			timeout = 4000,
-		},
-		pager = {
-			height = 0.5,
-		},
-	},
+  enable = true,
+  msg = {
+    targets = "cmd",
+    cmd = {
+      height = 0.5,
+    },
+    dialog = {
+      height = 0.5,
+    },
+    msg = {
+      height = 0.5,
+      timeout = 4000,
+    },
+    pager = {
+      height = 0.5,
+    },
+  },
 })
 
 -- Enable built-in tools
