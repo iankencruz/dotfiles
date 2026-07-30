@@ -2,3 +2,9 @@
 mode = "light"
 [bar.main]
 position = "bottom"
+
+
+
+[bar.main.monitor.dp1]
+match = "DP-3"
+enabled = false

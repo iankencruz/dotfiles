@@ -27,7 +27,7 @@ require("lazy").setup({
     { import = "plugins" },
   },
   install = { colorscheme = { "catppuccin" } },
-  checker = { enabled = false },
+  checker = { enabled = true, notify = false },
 })
 
 -- Load default colorscheme

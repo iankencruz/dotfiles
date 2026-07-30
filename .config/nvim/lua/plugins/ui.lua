@@ -1,15 +1,13 @@
 return {
   -- Colorscheme
   {
-    "rebelot/kanagawa.nvim",
+    "catppuccin/nvim",
     name = "catppuccin",
+    lazy = true,
     priority = 1000,
     opts = {
       flavour = "mocha",
-      integrations = {
-        blink_cmp = true,
-      },
-    },
+    }
   },
 
   -- Statusline
