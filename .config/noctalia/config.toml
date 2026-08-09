@@ -8,3 +8,7 @@ position = "bottom"
 [bar.main.monitor.dp1]
 match = "DP-3"
 enabled = false
+
+
+[shell]
+shared_gl_context = false

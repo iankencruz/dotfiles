@@ -89,6 +89,13 @@ return {
           mode = "local",
           processId = require('dap.utils').pick_process,
         },
+        {
+          type = 'go',
+          name = 'Connect to Hot-Reloading Air (Port 2345)',
+          request = 'attach',
+          mode = 'remote',
+          port = 2345,
+        },
       }
 
 

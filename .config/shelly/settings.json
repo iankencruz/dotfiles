@@ -1,0 +1,11 @@
+{
+  "TrayEnabled": false,
+  "TrayAutoStart": false,
+  "TrayCheckIntervalHours": 72,
+  "UseSymbolicTray": true,
+  "TrayIconPath": "",
+  "TrayUpdatesIconPath": "",
+  "UseWeeklySchedule": false,
+  "DaysOfWeek": [],
+  "Time": ""
+}

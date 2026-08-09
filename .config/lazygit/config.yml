@@ -9,8 +9,8 @@ gui:
   # more vertical room when columns are stacked:
   expandFocusedSidePanel: false
 git:
-  pagers:
+  diffRenderers:
     - # Optional: Uses delta or diff-so-fancy if you have them installed 
       # for cleaner diff previews inside the pane.
       colorArg: always
-      pager: ""
+      type: rawGit
