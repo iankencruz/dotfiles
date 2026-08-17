@@ -25,7 +25,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 fish_add_path /usr/local/go/bin
 
 # Add Go user binaries (standard location)
-fish_add_path $HOME/go/bin
+if type -q go
+    fish_add_path (go env GOPATH)/bin
+end
 
 
 # --- Yazi File Manager Function ---

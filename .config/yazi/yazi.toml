@@ -3,46 +3,40 @@ system_default = [
     { run = 'xdg-open "$1"', desc = "System Default", for = "linux" }
 ]
 edit = [
-    { run = 'nvim "$@"', block = true, desc = "Edit with Neovim" }
+    { run = "$EDITOR %s", block = true, for = "unix" },
 ]
 open = [
     { run = 'xdg-open "$@"', desc = "Open" }
 ]
-imv = [
-    { run = 'imv "$@"', block = true, desc = "imv" }
-]
+# imv = [
+#     { run = 'imv "$@"', block = true, desc = "imv" }
+# ]
 
 [open]
-rules = [
-    { url = "*.lua", use = [ "edit" ] },
-    { mime = "text/*", use = [ "edit" ] },
-    { mime = "*.txt", use = [ "edit" ] },
-    { mime = "*.json", use = [ "edit" ] },
-    { mime = "*.sh", use = "edit" },
-    { mime = "*.toml", use = "edit" },
-    { mime = "*.y*ml", use = "edit" },
-    { mime = "*config", use = "edit" },
-    { mime = "*.cfg", use = "edit" },
-    { mime = "*env", use = "edit" },
-    { mime = "*.d", use = "edit" },
-    { mime = "*.md", use = "edit" },
-    { mime = "*.txt", use = "edit" },
-    { mime = ".zsh*", use = "edit" },
-    { mime = "*.ini", use = "edit" },
-    { mime = "*.lua", use = "edit" },
-    { mime = "*.xml", use = "edit" },
-    { mime = "*.log", use = "edit" },
+prepend_rules = [
+	{ url = "*.json", use = "edit" },
+	{ url = "*.kdl", use = "edit" },
+	# { url = "*lua", use = "edit" },
+	{ url = "*yml", use = "edit" },
 
+	# Multiple openers for a single rule
+	{ url = "*.html", use = [ "open", "edit" ] },
 
-    { mime = "application/pdf", use = [ "system_default" ] },
-    { mime = "image/*", use = [ "imv", "system_default" ] },
-    { mime = "{audio,video}/*", use = [ "system_default" ] }
+  { mime = "application/pdf", use = [ "system_default" ] },
+  { mime = "image/*", use = [  "system_default" ] },
+  { mime = "{audio,video}/*", use = [ "system_default" ] }
 ]
+
+append_rules = [
+	{ url = "*", use = ["open", "edit"] },
+]
+
+
 
 [mgr]
 show_hidden = true
 
-[plugin]
-prepend_previewers = [
-    { mime = "image/*", run = "imv-preview" }
-]
+# [plugin]
+# prepend_previewers = [
+#     { mime = "image/*", run = "imv-preview" }
+# ]
