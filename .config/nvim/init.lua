@@ -26,12 +26,12 @@ require("lazy").setup({
     -- Automatically import all plugin specifications from the lua/plugins/ directory
     { import = "plugins" },
   },
-  install = { colorscheme = { "catppuccin" } },
+  install = { colorscheme = { "onedark" } },
   checker = { enabled = true, notify = false },
 })
 
 -- Load default colorscheme
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("onedark")
 
 -- UI2: no more press enter
 require("vim._core.ui2").enable({

@@ -20,11 +20,36 @@ return {
       local dap = require('dap')
       local dap_go = require('dap-go')
 
+
+
+      -- Intercept choice prompts to make Enter default to option 1
+      local original_select = vim.ui.select
+      vim.ui.select = function(items, opts, on_choice)
+        if opts and opts.prompt and opts.prompt:match("Configuration") then
+          local original_on_choice = on_choice
+          on_choice = function(item, idx)
+            -- If user hits Enter without typing a number, select item 1
+            if not item and not idx then
+              return original_on_choice(items[1], 1)
+            end
+            return original_on_choice(item, idx)
+          end
+        end
+        return original_select(items, opts, on_choice)
+      end
+
       -- 1. Initialize dap-go normally
       dap_go.setup()
 
       -- 2. Completely overwrite the configuration table with ONLY your choices
       dap.configurations.go = {
+        {
+          type = 'go',
+          name = 'Connect to Hot-Reloading Air (Port 2345)',
+          request = 'attach',
+          mode = 'remote',
+          port = 2345,
+        },
         {
           type = "go",
           name = "Debug App (cmd/app)",
@@ -89,13 +114,7 @@ return {
           mode = "local",
           processId = require('dap.utils').pick_process,
         },
-        {
-          type = 'go',
-          name = 'Connect to Hot-Reloading Air (Port 2345)',
-          request = 'attach',
-          mode = 'remote',
-          port = 2345,
-        },
+
       }
 
 

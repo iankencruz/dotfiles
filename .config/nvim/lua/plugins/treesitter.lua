@@ -12,6 +12,7 @@ return {
         "rust",
         "go",
         "html",
+        "javascript",
         "typescript",
         "svelte",
         "zig"
