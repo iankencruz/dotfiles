@@ -9,7 +9,7 @@ return {
       formatters = {
         sleek = {
           command = "sleek",
-          args = { "-U", "true", "-l", "1" },
+          args = { "-U", "true", "-l", "2" },
           stdin = true,
         },
       },
