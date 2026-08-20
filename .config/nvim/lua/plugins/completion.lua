@@ -16,10 +16,11 @@ return {
     dependencies = { "saghen/blink.lib" },
     version = "*",
     opts = {
-      snippets = { preset = "default" },
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
       },
+
+      snippets = { preset = "default" },
       signature = {
         enabled = true
       },
